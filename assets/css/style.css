@@ -1,0 +1,110 @@
+*, 
+*::before, 
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --bleu-fonce : #044873;
+    --background : #eef1ff;
+    --white : #ffffff;
+}
+
+body {
+    background-color: #eef1ff;
+    font-family: 'Poppins';
+    font-size: 16px;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo {
+    width: 10%;
+}
+
+.nav-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max-content;
+    font-family: 'Koulen';
+    font-size: 1.5rem;
+    gap: 3.5rem;
+}
+
+.nav-items .item a {
+    color: var(--bleu-fonce);
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max-content;
+    font-family: 'Koulen';
+    gap: 2rem;
+    margin-right: 3rem;
+}
+
+.nav-btn {
+    background-color: var(--bleu-fonce);
+    font-size: 1.2rem;
+    color: var(--white);
+    padding: .5rem 2rem;
+    border-radius: 2rem;
+    transition: transform 0.2s ease;
+}
+
+.nav-btn-2 {
+    background-color: var(--background);
+    font-size: 1.2rem;
+    color: var(--bleu-fonce);
+    padding: .4rem 2rem;
+    border-radius: 2rem;
+    border: solid 3px var(--bleu-fonce);
+    transition: transform 0.2s ease;
+}
+
+.nav-btn:hover , .nav-btn-2:hover {
+    transform: scale(1.1);
+}
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link.active {
+    border-bottom: solid 2px var(--bleu-fonce);
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--bleu-fonce);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:not(.active):hover::after {
+    width: 100%;
+}
