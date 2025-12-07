@@ -16,6 +16,13 @@ body {
     background-color: #eef1ff;
     font-family: 'Poppins';
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
 }
 
 ul {
@@ -107,4 +114,20 @@ a {
 
 .nav-link:not(.active):hover::after {
     width: 100%;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #021826;
+    padding: 2rem 4rem;
+}
+
+.footer-logo {
+    width: 20rem;
+}
+
+.coordonnees-infos {
+    color: var(--white);
 }
