@@ -14,7 +14,9 @@
 // Inclut le header
 include('templates/header.php');
 ?>
-
+<main>
+    
+</main>
 <?php
 // Inclut le header
 include('templates/footer.php');
