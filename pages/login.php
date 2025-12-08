@@ -1,3 +1,7 @@
+<?php
+require_once './pages/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +19,25 @@
 include('../templates/header.php');
 ?>
 <main>
-    
+    <section class="login-section">
+        <img src="../assets/images/logo.png" alt="logo site" class="login-img">
+        <h2 class="login-title">Connexion</h2>
+        <form action="login-traitement.php" method="post" class="login-form">
+            <div class="form-container">
+                <input type="text" name="identifiant" placeholder="Nom d'utilisateur : " class="login-input">
+                <input type="password" name="password" placeholder="Mot de passe : " class="login-input">
+            </div>
+
+            <div class="connexion-2">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">Se souvenir de moi</label>
+
+                <a href="" class="link-signin">Pas de compte ? Je m'inscris !</a>
+            </div>
+
+            <button type="submit">Se connecter</button>
+        </form>
+    </section>
 </main>
 <?php
 // Inclut le header
