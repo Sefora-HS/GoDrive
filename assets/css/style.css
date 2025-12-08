@@ -188,7 +188,7 @@ a {
 
 /* Login page */
 
-.login-section {
+.login-section, .signin-section {
     height: 80vh;
     display: flex;
     flex-direction: column;
@@ -196,7 +196,7 @@ a {
 }
 
 .login-img {
-    width: 25rem;
+    width: 20rem;
     margin-top: 5rem;
 }
 
@@ -252,4 +252,57 @@ a {
     cursor: pointer;
     width: 50%;
     margin: 1.8rem auto;
+}
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.signin-section {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.signin-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.bloc {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.signin-input {
+    background: var(--white);
+    border: none;
+    padding: 1rem 3rem;
+    font-family: 'Poppins';
+    border-radius: .5rem;
+    margin-top: .5rem;
+    box-shadow: 0 0 5px rgba(0,100,255,0.5);
+    outline: none;
+}
+
+.signin-input:focus {
+    border: #044873;
+    box-shadow: 0 0 20px rgba(0,100,255,0.5);
+}
+
+.signin-form button {
+    background-color: var(--bleu-fonce);
+    color: var(--white);
+    font-family: 'Koulen';
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    padding: .5rem;
+    cursor: pointer;
+    width: 50%;
+    margin: 3rem auto;
 }

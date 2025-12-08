@@ -22,10 +22,10 @@ include('../templates/header.php');
     <section class="login-section">
         <img src="../assets/images/logo.png" alt="logo site" class="login-img">
         <h2 class="login-title">Connexion</h2>
-        <form action="login-traitement.php" method="post" class="login-form">
+        <form action="#" method="post" class="login-form">
             <div class="form-container">
-                <input type="text" name="identifiant" placeholder="Nom d'utilisateur : " class="login-input">
-                <input type="password" name="password" placeholder="Mot de passe : " class="login-input">
+                <input type="text" name="identifiant" placeholder="Nom d'utilisateur : " class="login-input" required>
+                <input type="password" name="password" placeholder="Mot de passe : " class="login-input" required>
             </div>
 
             <div class="connexion-2">

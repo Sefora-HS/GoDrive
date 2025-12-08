@@ -19,7 +19,27 @@ require_once '../pages/config.php';
 include('../templates/header.php');
 ?>
 <main>
-    
+    <section class="signin-section">
+        <img src="../assets/images/logo.png" alt="logo site" class="login-img">
+        <h2 class="login-title">Inscription</h2>
+        <form action="" method="" class="signin-form">
+            <div class="signin-inputs">
+                <div class="bloc">
+                    <input name="nom" type="text" placeholder="Nom : " class="signin-input" required>
+                    <input name="id" type="text" placeholder="Identifiant : " class="signin-input" required>
+                    <input name="password" type="password" placeholder="Mot de passe : " class="signin-input" required>
+                </div>
+                
+                <div class="bloc">
+                    <input name="prenom" type="text" placeholder="Prénom : " class="signin-input" required>
+                    <input name="email" type="email" placeholder="Adresse mail : " class="signin-input" required>
+                    <input name="password-confirm" type="password" placeholder="Mot de passe (confirmation) : " class="signin-input" required>
+                </div>
+            </div>
+
+            <button type="submit">Je m'inscris</button>
+        </form>
+    </section>
 </main>
 <?php
 // Inclut le header
