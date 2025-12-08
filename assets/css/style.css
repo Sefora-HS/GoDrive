@@ -18,7 +18,7 @@ body {
     font-size: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 ul {
@@ -305,4 +305,32 @@ a {
     cursor: pointer;
     width: 50%;
     margin: 3rem auto;
+}
+
+.title-section {
+    height: 60vh;
+    background: url(../images/vue-aerienne.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-section h1 {
+    color: var(--white);
+    font-family: 'Koulen';
+    font-size: 4.5rem;
+    letter-spacing: 2px;
+}
+
+.background {
+    height: 80vh;
+    flex: 1;
+}
+
+.form-reservation {
+    height: 20vh;
+    background-color: var(--bleu-fonce);
 }

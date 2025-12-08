@@ -19,7 +19,17 @@ require_once '../pages/config.php';
 include('../templates/header.php');
 ?>
 <main>
-    
+    <section class="title-section">
+        <h1>Formulaire Reservation rapide</h1>
+    </section>
+    <section class="form-reservation">
+
+    </section>
+    <section class="background">
+        <div class="chiffres-reservation">
+            
+        </div>
+    </section>
 </main>
 <?php
 // Inclut le header
