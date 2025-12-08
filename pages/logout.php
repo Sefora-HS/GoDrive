@@ -1,3 +1,3 @@
 <?php
-require_once './pages/config.php';
+require_once '../pages/config.php';
 ?>
