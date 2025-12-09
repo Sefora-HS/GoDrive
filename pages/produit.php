@@ -1,4 +1,4 @@
-?php
+<?php
 //connection
 require_once '../pages/config.php';
 
