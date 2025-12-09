@@ -492,3 +492,44 @@ a {
     padding: .5rem 1rem;
     border-radius: 1rem;
 }
+
+.faq-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.faq-section h2 {
+    font-family: 'Koulen';
+    font-size: 3rem;
+    color: var(--bleu-fonce);
+    letter-spacing: 2px;
+    margin: 2rem 0;
+}
+
+.faq {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+
+details {
+    background-color: var(--white);
+    border-bottom: 2px solid var(--bleu-fonce);
+    padding: .5rem 3rem;
+    border-radius: .5rem .5rem 0 0;
+}
+
+summary {
+    font-family: 'koulen';
+    color: var(--bleu-fonce);
+    font-size: 1.8rem;
+    padding: .5rem 3rem;
+}
+
+.faq p {
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    text-transform: uppercase;
+}
