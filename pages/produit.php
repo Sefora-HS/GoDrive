@@ -16,7 +16,7 @@ try {
 
 */
 
-// ----------  Récupérer l'ID du produit dans l'URL ----------
+// ----------  Récupérer l'ID du produit dans l'URL ---------
 if (!isset($_GET['id'])) {
     echo "Aucun produit sélectionné.";
     exit;
