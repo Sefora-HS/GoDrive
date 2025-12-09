@@ -26,10 +26,10 @@ include('../templates/header.php');
 // Récupérer toutes les voitures
 $stmt = $conn->prepare("SELECT * FROM voitures");
 $stmt->execute();
-$voitures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$vehicule = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Si aucune voiture trouvée
-if (!$voitures) {
+if (!$vehicule) {
     echo "<p class='message-vide'>Aucun véhicule disponible pour le moment.</p>";
 }
 ?>
