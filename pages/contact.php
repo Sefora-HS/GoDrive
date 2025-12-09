@@ -19,7 +19,24 @@ require_once '../pages/config.php';
 include('../templates/header.php');
 ?>
 <main>
-    
+    <section class="contact-title">
+        <h1>Contact</h1>
+    </section>
+    <section class="form-contact-section">
+
+    <h2>Formulaire de contact</h2>
+
+    <form action="" method="post" class="contact-form">
+        <div class="contact-nom">
+            <input type="text" name="nom" placeholder="Nom/Prenom :" required>
+            <input type="email" name="email" placeholder="Adresse mail :" required>
+        </div>
+        
+        <input type="text" name="message" placeholder="Message :" class="input-msg" required>
+
+        <button type="submit">Nous contacter</button>
+    </form>
+    </section>
 </main>
 <?php
 // Inclut le header

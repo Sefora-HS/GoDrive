@@ -430,3 +430,65 @@ a {
     text-align: center;
 }
 
+.contact-title {
+    background: url(../images/contact-img.jpg);
+    background-position: 50% 40%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-title h1 {
+    font-family: 'Koulen';
+    font-size: 6rem;
+    color: var(--white);
+    letter-spacing: 2px;
+}
+
+.form-contact-section {
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-contact-section h2 {
+    font-family: 'Koulen';
+    font-size: 3rem;
+    color: var(--bleu-fonce);
+    margin-top: 5rem;
+}
+
+.contact-form {
+     display: flex;
+     flex-direction: column;
+     gap: 2rem;
+     margin-top: 2rem;
+}
+
+.contact-form input {
+    background: var(--white);
+    outline: none;
+    border-radius: .5rem;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 5px rgba(0,100,255,0.5);
+    border: none;
+}
+
+.contact-form input:focus {
+    box-shadow: 0 0 20px rgba(0,100,255,0.5);
+}
+
+.contact-form button {
+    background-color: var(--bleu-fonce);
+    color: var(--white);
+    font-family: 'Koulen';
+    font-size: 1.3rem;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+}
