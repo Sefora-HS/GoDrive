@@ -20,38 +20,7 @@ include('../templates/header.php');
 ?>
 
 <main>
-    <main class="catalogue-container">
 
-<?php
-// Récupérer toutes les voitures
-$stmt = $conn->prepare("SELECT * FROM voitures");
-$stmt->execute();
-$vehicule = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Si aucune voiture trouvée
-if (!$vehicule) {
-    echo "<p class='message-vide'>Aucun véhicule disponible pour le moment.</p>";
-}
-?>
-
-<section class="grille-catalogue">
-
-<?php foreach ($voitures as $v): ?>
-    <div class="carte-voiture">
-        <img src="../assets/images/<?php echo $v['image']; ?>" alt="Image voiture" class="img-voiture">
-        
-        <h3 class="titre-voiture"><?php echo htmlspecialchars($v['marque'] . " " . $v['modele']); ?></h3>
-
-        <p class="texte-voiture"> <?php echo htmlspecialchars($v['motorisation']); ?> – 
-        <?php echo htmlspecialchars($v['puissance']); ?> ch</p>
-
-        <p class="prix-voiture"><?php echo $v['prix_jour']; ?>€ / jour</p>
-
-        <a href="produit.php?id=<?php echo $v['id']; ?>" class="btn-voiture">Voir plus</a>
-    </div>
-<?php endforeach; ?>
-
-</section>
 </main>
 
 <?php
