@@ -40,7 +40,7 @@ include('../templates/header.php');
 
             <details>
                 <summary>Puis-je annuler ou modifier ma reservation ?</summary>
-                <p>La reservation n'est pas modifiable mais elle peut tout a fait etre annulee</p>
+                <p>La reservation n'est pas modifiable mais elle peut tout a fait etre annulée</p>
             </details>
 
             <details>
