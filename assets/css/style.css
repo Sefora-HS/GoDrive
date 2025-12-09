@@ -533,3 +533,148 @@ summary {
     padding: .5rem 1rem;
     text-transform: uppercase;
 }
+
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--background);
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 18rem;
+    background-color: #021826; /* Couleur adaptée pour logos blancs */
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Logo en haut */
+.admin-logo {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.logo-img {
+    width: 120px;
+    height: auto;
+}
+
+/* Navigation */
+.admin-sidebar nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-sidebar ul li a {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    font-family: 'Koulen';
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+    color: #ffffff; /* Texte blanc pour contraster */
+    padding: .6rem 1rem;
+    border-radius: .8rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.admin-sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.admin-sidebar ul li a.active {
+    background-color: #022d52;
+    color: #ffffff;
+}
+
+/* Icônes */
+.admin-sidebar .icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Contenu principal */
+.admin-content {
+    flex: 1;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Header */
+.admin-header {
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 1.5rem 2rem;
+}
+
+.admin-header h1 {
+    font-family: 'Koulen';
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    color: var(--bleu-fonce);
+}
+
+/* Cartes */
+.admin-card {
+    background: var(--white);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(4,72,115,0.1);
+}
+
+/* Boutons */
+.admin-btn {
+    background-color: var(--bleu-fonce);
+    color: var(--white);
+    border: none;
+    font-family: 'Koulen';
+    font-size: 1.2rem;
+    padding: .6rem 2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.admin-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Bouton de déconnexion */
+.admin-logout {
+    margin-top: auto; /* pousse le bouton tout en bas */
+    background-color: #ff4d4d; /* rouge pour contraste */
+    color: #ffffff;
+    border: none;
+    font-family: 'Koulen';
+    font-size: 1.2rem;
+    padding: .6rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.admin-logout:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+.admin-logout .icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
