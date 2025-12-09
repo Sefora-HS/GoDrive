@@ -15,7 +15,28 @@
 include('../templates/header.php');
 ?>
 <main>
+    <h1>Mon Compte</h1>
+    <hr>
 
+    <section class="moncompte-section">
+
+        <div class="moncompte-infos">
+            <form action="" class="infos-compte">
+                <input type="text" name="nom" placeholder="Nom :">
+                <input type="text" name="prenom" placeholder="Prénom :">
+                <input type="email" name="email" placeholder="Adresse Mail :">
+                <input name="password" type="password" placeholder="Mot de passe : ">
+                <input type="text" name="adresse" placeholder="Adresse :">
+                <input type="text" name="ville" placeholder="Ville :">
+                <input type="text" name="code_postal" placeholder="Code postal :">
+            </form>
+        </div>
+
+        <div class="mes-reservations">
+
+        </div>
+
+    </section>
 </main>
 <?php
 // Inclut le header
