@@ -22,12 +22,63 @@ include('../templates/header.php');
     <section class="title-section">
         <h1>Formulaire Reservation rapide</h1>
     </section>
-    <section class="form-reservation">
+    <section class="form-reservation-section">
+
+        <form action="" class="form-reservation">
+
+            <div class="right-reservation">
+
+                <div class="row">
+                    <input type="text" name="nom" placeholder="Nom :" class="input" required>
+                    <input type="text" name="prenom" placeholder="Prénom :" class="input" required>
+                </div>
+
+                <div class="row">
+                    <input type="email" name="email" placeholder="Adresse Mail :" class="input input-full" required>
+                </div>
+
+                <div class="row">
+                    <input type="text" name="adresse" placeholder="Adresse :" class="input input-full" required>
+                </div>
+
+                <div class="row">
+                    <input type="text" name="ville" placeholder="Ville :" class="input" required>
+                    <input type="text" name="code_postal" placeholder="Code postal :" class="input" required>
+                </div>
+
+                <div class="row">
+                    <input type="text" name="message" placeholder="Message (facultatif) :" class="input input-full input-msg">
+                </div>
+            </div>
+
+            <div class="left-reservation">
+                <?php 
+                    //affichage de la voiture et choix reservation
+                 ?>
+                <button type="submit">Reserver ➡</button>
+            </div>
+
+        </form>
 
     </section>
     <section class="background">
         <div class="chiffres-reservation">
-            
+            <div class="chiffres-reservation-item">
+                <p class="chiffre">80</p>
+                <p class="chiffre-desc">+80 destinations dans toutes la france</p>
+            </div>
+            <div class="chiffres-reservation-item">
+                <p class="chiffre">100k</p>
+                <p class="chiffre-desc">+100k visiteurs chaque semaine</p>
+            </div>
+            <div class="chiffres-reservation-item">
+                <p class="chiffre">800</p>
+                <p class="chiffre-desc">+800 modeles disponible a la location</p>
+            </div>
+            <div class="chiffres-reservation-item">
+                <p class="chiffre">600</p>
+                <p class="chiffre-desc">En moyenne 600 voitures loue chaque jour</p>
+            </div>
         </div>
     </section>
 </main>

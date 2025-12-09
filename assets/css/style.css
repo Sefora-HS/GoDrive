@@ -29,6 +29,7 @@ a {
     text-decoration: none;
 }
 
+
 .header {
     height: 15vh;
     display: flex;
@@ -326,11 +327,106 @@ a {
 }
 
 .background {
-    height: 80vh;
+    height: 60vh;
     flex: 1;
 }
 
-.form-reservation {
-    height: 20vh;
-    background-color: var(--bleu-fonce);
+.form-reservation-section {
+    height: 50vh;
+    background-color: var(--white);
+    max-width: 65vw;
+    display: flex;
+    margin: 0 auto;
+    margin-top: -5rem;
+    border: solid 1px var(--bleu-fonce);
+    border-radius: 1rem;
 }
+
+.form-reservation {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.right-reservation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 0 48%;
+    gap: 1.5rem;
+    padding-left: 2rem;
+}
+
+.row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 1px solid #1e456d;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+.input:focus {
+    border: #044873;
+    box-shadow: 0 0 20px rgba(0,100,255,0.5);
+}
+
+.input-msg {
+    height: 8rem;
+}
+
+.input-full {
+    flex: 100%;
+}
+
+
+.left-reservation {
+    display: flex;
+    flex-direction: column;           
+    flex: 0 0 48%;
+    padding: 2rem;
+}
+
+.left-reservation button {
+    background-color: var(--bleu-fonce);
+    color: var(--white);
+    border-radius: 3rem;
+    border: none;
+    font-family: 'Koulen';
+    font-size: 1.5rem;
+    padding: .5rem 2rem;
+    cursor: pointer;
+    width: 12rem;
+}
+
+.chiffres-reservation {
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
+    font-family: 'Koulen';
+    color: var(--bleu-fonce);
+    padding-top: 8rem;
+}
+
+.chiffres-reservation-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.chiffre {
+    font-size: 5rem;
+}
+
+.chiffre-desc {
+    font-size: 1.3rem;
+    width: 65%;
+    text-align: center;
+}
+
