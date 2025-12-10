@@ -187,6 +187,107 @@ a {
     box-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
 
+/* Page Index */
+.section-index {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-top {
+    display: flex;
+    width: 100%;
+    padding-top: 7rem;
+}
+
+.hero-right {
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.hero-right img {
+    width: 120%;
+    transform: translateX(20%);
+}
+
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 50%;
+    padding: 1rem 5rem;
+}
+
+.hero-title {
+    font-family: 'Koulen';
+    font-size: 6.5rem;
+    line-height: 6rem;
+    letter-spacing: 3px;
+    color: var(--bleu-fonce);
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.hero-subtitle {
+    color: #565656;
+    font-family: 'Koulen';
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+}
+
+.buttons-hero {
+    display: flex;
+    margin-top: 3rem;
+    gap: 2rem;
+    width: 70%;
+    margin-left: -1rem;
+    
+}
+.buttons-hero .clair {
+    color: var(--bleu-fonce);
+    background-color: #e3e9ff;
+}
+
+.buttons-hero a {
+    flex: 0 0 50%;
+    text-align: center;
+    padding: 1rem 2.5rem;
+    background: var(--bleu-fonce);
+    color: var(--white);
+    border-radius: 3rem;
+    font-family: 'Koulen';
+    font-weight: 400;
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.buttons-hero a:hover {
+    transform: scale(1.08);  
+}
+
+.hero-logos {
+    min-height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo-container img {
+    width: 8rem;
+    height: 7rem;
+}
+
 /* Login page */
 
 .login-section, .signin-section {
