@@ -150,8 +150,11 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
 --
 
 INSERT INTO `vehicules` (`id`, `nom_vehicule`, `marque`, `annee_vehicule`, `description`, `image`, `prix_jour`, `nb_places`) VALUES
-(1, 'Peugeot 206', 'Peugeot', '1998', '', '', 0, 0),
-(2, 'Nissan Qashqai', 'Nissan', '2007', '', '', 0, 0);
+(1, 'Peugeot 206', 'Peugeot', '1998', 'Petite citadine économique, parfaite pour les trajets quotidiens.', 'peugeot206.jpg', 30, 5),
+(2, 'Nissan Qashqai', 'Nissan', '2007', 'SUV confortable, idéal pour les familles et les longs trajets.', 'qashqai.jpg', 55, 5),
+(3, 'Renault Clio 4', 'Renault', '2015', 'Voiture moderne, faible consommation et conduite agréable.','clio4.jpg',40, 5),
+(4, 'Audi A3', 'Audi', '2018', 'Berline premium, idéale pour ceux cherchant confort et performance.','audi_a3.jpg',75, 5),
+(5, 'BMW X5', 'BMW', '2020', 'SUV haut de gamme, puissant et parfait pour longs trajets.','bmw_x5.jpg',120, 7);
 
 --
 -- Constraints for dumped tables
