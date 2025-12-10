@@ -12,11 +12,11 @@
         <div class="footer-nav">
             <h2 class="footer-title">Navigation</h2>
             <ul class="footer-nav-list">
-                <li class="footer-nav-item"><a href="#" class="footer-nav-link">Accueil</a></li>
-                <li class="footer-nav-item"><a href="#" class="footer-nav-link">Catalogue</a></li>
-                <li class="footer-nav-item"><a href="#" class="footer-nav-link">Reservation rapide</a></li>
-                <li class="footer-nav-item"><a href="#" class="footer-nav-link">FAQ</a></li>
-                <li class="footer-nav-item"><a href="#" class="footer-nav-link">Contact</a></li>
+                <li class="footer-nav-item"><a href="../index.php" class="footer-nav-link">Accueil</a></li>
+                <li class="footer-nav-item"><a href="../pages/catalogue.php" class="footer-nav-link">Catalogue</a></li>
+                <li class="footer-nav-item"><a href="../pages/reservation.php" class="footer-nav-link">Reservation rapide</a></li>
+                <li class="footer-nav-item"><a href="../pages/faq.php" class="footer-nav-link">FAQ</a></li>
+                <li class="footer-nav-item"><a href="../pages/contact.php" class="footer-nav-link">Contact</a></li>
             </ul>
         </div>
 
