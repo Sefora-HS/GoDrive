@@ -19,7 +19,54 @@ require_once '../pages/config.php';
 include('../templates/header.php');
 ?>
 
-<main>
+<main class="catalogue-container">
+     <h1 class="titre-page">Notre catalogue de véhicules</h1>
+
+    <?php
+    $requete = $bdd->prepare("SELECT * FROM vehicules ORDER BY prix_jour ASC");
+    $requete->execute();
+    $vehicules = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$vehicules) {
+        echo "<p class='message-vide'>Aucun véhicule disponible pour le moment.</p>";
+    }
+    ?>
+
+    <section class="grille-catalogue">
+
+        <?php foreach ($vehicules as $v): ?>
+
+            <?php  
+            // image : si vide → image par défaut
+            $image = (!empty($v['image'])) ? $v['image'] : "default.png";
+            ?>
+
+            <div class="carte-vehicule">
+
+                <img src="../assets/images/<?php echo $image; ?>" 
+                     alt="<?php echo htmlspecialchars($v['nom_vehicule']); ?>" 
+                     class="img-vehicule">
+
+                <h3 class="titre-vehicule"><?php echo htmlspecialchars($v['nom_vehicule']); ?></h3>
+
+                <p class="infos-vehicule">
+                    Marque : <?php echo htmlspecialchars($v['marque']); ?><br>
+                    Année : <?php echo $v['annee_vehicule']; ?><br>
+                    Places : <?php echo $v['nb_places']; ?>
+                </p>
+
+                <p class="prix-vehicule"><?php echo $v['prix_jour']; ?> € / jour</p>
+
+                <a href="produit.php?id=<?php echo $v['id']; ?>" class="btn-vehicule">
+                    Voir le véhicule
+                </a>
+
+            </div>
+
+        <?php endforeach; ?>
+
+    </section>
+
 
 </main>
 
