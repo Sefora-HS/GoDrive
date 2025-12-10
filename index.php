@@ -24,8 +24,8 @@ include('templates/header.php');
                 <h2 class="hero-subtitle">Reservez des maintenant votre voiture et profitez de la route</h2>
 
                 <div class="buttons-hero">
-                    <a href="#">Je reserve !</a>
-                    <a href="#" class="clair">En savoir plus</a>
+                    <a href="./pages/reservation.php">Je reserve !</a>
+                    <a href="./pages/faq.php" class="clair">En savoir plus</a>
                 </div>
             </div>
             <!--  -->
