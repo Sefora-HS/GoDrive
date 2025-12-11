@@ -20,7 +20,9 @@ include('../templates/header.php');
 ?>
 
 <main class="catalogue-container">
-     <h1 class="titre-page">Notre catalogue de véhicules</h1>
+     <h1 class="titre-page">Notre catalogue de vehicules</h1>
+
+     <div class="separator"></div>
 
     <?php
     $requete = $bdd->prepare("SELECT * FROM vehicules ORDER BY prix_jour ASC");
@@ -58,7 +60,7 @@ include('../templates/header.php');
                 <p class="prix-vehicule"><?php echo $v['prix_jour']; ?> € / jour</p>
 
                 <a href="produit.php?id=<?php echo $v['id']; ?>" class="btn-vehicule">
-                    Voir le véhicule
+                    Voir le vehicule
                 </a>
 
             </div>

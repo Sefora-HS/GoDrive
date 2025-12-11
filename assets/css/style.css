@@ -783,15 +783,35 @@ summary {
 .catalogue-container {
     padding: 3rem;
     min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+.titre-page {
+    font-family: 'Koulen';
+    font-size: 3.5rem;
+    color: var(--bleu-fonce);
+
+}
+
+.separator {
+    height: 2px;
+    background-color: #ccc;
+    width: 50%;
+    margin: 1rem 0 5rem 0 ;
+}
+
+
 .grille-catalogue {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .carte-vehicule {
+    flex: 0 0 20%;
     background: var(--white);
     padding: 1rem;
     border-radius: 1rem;
@@ -834,4 +854,3 @@ summary {
     font-family: 'Koulen';
     font-size: 1.2rem;
 }
-
