@@ -2,6 +2,44 @@
 require_once '../pages/config.php';
 ?>
 
+<!-- Filtres pour la barre de filtre du catalogue -->
+<?php 
+    //on demande toutes les colonnes de la tables véhicules
+    $sql = "SELECT * FROM vehicules WHERE 1=1";
+    //initialisation du tableau parametres pour stockés les données renvoyés
+    $parametres = [];
+
+    //on recupere la valeur de marque et on effectue des tests (present, vide)
+    if(isset($_GET['marque']) && $_GET['marque'] !== "") {
+        $sql .= "AND marque = :marque";
+        $parametres[':marque'] = $_GET['marque'];
+    }
+
+    //on recupere la valeur de prix et effectuons les même tests
+    if (isset($_GET['prix']) && $_GET['prix'] !== ""){
+        if (is_numeric($_GET['prix'])) {
+            $sql .= "AND prix_jour <= :prix";
+            $parametres[':prix'] = $prix;
+        }
+    }
+
+    
+
+    //on recupere la valeur de nb_places et effectuons les même tests 
+    if (isset($_GET['nb_places']) && $_GET['nb_places'] !== "") {
+    $sql .= " AND nb_places = :nb";
+    $params[':nb'] = $_GET['nb_places'];
+    }
+
+    //preparation de la requete
+    $requete = $bdd->prepare($sql); 
+    //execution de la requete
+    $requete->execute($params);
+    //retourne sous forme de tableau associatif pour l'insertion 
+    $vehicules = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
