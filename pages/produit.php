@@ -22,7 +22,7 @@ if (!isset($_GET['id'])) {
     exit;
 }
 
-$vehicules = (int) $_GET['id']; // Sécurisation simple
+$vehicule = (int) $_GET['id']; // Sécurisation simple
 
 
 
