@@ -799,7 +799,7 @@ summary {
     height: 2px;
     background-color: #ccc;
     width: 50%;
-    margin: 1rem 0 5rem 0 ;
+    margin: 1rem 0 3rem 0 ;
 }
 
 
@@ -853,4 +853,46 @@ summary {
     border-radius: 2rem;
     font-family: 'Koulen';
     font-size: 1.2rem;
+}
+
+.barre-filtre-catalogue {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.barre-filtres {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.marque, .annee, .date, .prix, .places {
+    background: var(--background);
+    color: grey;
+    font-family: 'koulen';
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-bottom: 1px solid var(--bleu-fonce);
+    outline: none;
+}
+
+.marque:focus, .annee:focus, .date:focus, .prix:focus, .places:focus {
+    border: none;
+    box-shadow: 0 0 20px rgba(0,100,255,0.5);
+}
+
+.barre-filtres button {
+    background: var(--bleu-fonce);
+    color: var(--white);
+    font-family: 'Koulen';
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    padding: 1rem 3rem;
+    letter-spacing: 1px;
 }

@@ -84,10 +84,11 @@ include('../templates/header.php');
 
      <div class="separator"></div>
 
-     <div class="barre-filtre">
+     <div class="barre-filtre-catalogue">
+
         <form class="barre-filtres" method="GET">
 
-            <select name="marque">
+            <select name="marque" class="marque">
                 <option value="">Marque</option>
                 <option value="Renault">Renault</option>
                 <option value="Peugeot">Peugeot</option>
@@ -96,16 +97,16 @@ include('../templates/header.php');
                 <option value="Nissan">Nissan</option>
             </select>
 
-            <input type="number" name="annee" placeholder="Année min" value="<?php echo $_GET['annee'] ?? ''; ?>">
+            <input type="number" name="annee" class="annee" placeholder="Annee min" value="<?php echo $_GET['annee'] ?? ''; ?>">
 
-            <input type="date" name="date_debut" value="<?php echo $_GET['date_debut'] ?? ''; ?>" placeholder="Date début">
+            <input type="date" name="date_debut" class="date" value="<?php echo $_GET['date_debut'] ?? ''; ?>" placeholder="Date début">
 
-            <input type="date" name="date_fin" value="<?php echo $_GET['date_fin'] ?? ''; ?>" placeholder="Date fin">
+            <input type="date" name="date_fin" class="date" value="<?php echo $_GET['date_fin'] ?? ''; ?>" placeholder="Date fin">
 
 
-            <input type="number" name="prix" placeholder="Prix max (€)" value="<?php echo $_GET['prix'] ?? ''; ?>">
+            <input type="number" name="prix" class="prix" placeholder="Prix max (€)" value="<?php echo $_GET['prix'] ?? ''; ?>">
 
-            <select name="nb_places">
+            <select name="nb_places" class="places">
                 <option value="">Places</option>
                 <option value="2">2 places</option>
                 <option value="4">4 places</option>

@@ -1,6 +1,22 @@
 <?php
 //connection
 require_once '../pages/config.php';
+session_start();
+
+// Si l'utilisateur n'est pas connecté → redirection
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Vérification que l'utilisateur existe encore dans la BDD
+$verif = $bdd->prepare("SELECT id FROM utilisateurs WHERE id = :id");
+$verif->execute([':id' => $_SESSION['user_id']]);
+if ($verif->rowCount() == 0) {
+    unset($_SESSION['user_id']);
+    header('Location: login.php');
+    exit;
+}
 
 // ----------  Récupérer l'ID du produit dans l'URL ---------
 if (!isset($_GET['id'])) {
