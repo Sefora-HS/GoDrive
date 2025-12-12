@@ -1,6 +1,7 @@
 <?php
     //recuperation du nom de la page actuel
     $current_page = basename($_SERVER['PHP_SELF']);
+    $isConnected = isset($_SESSION['user_id']);
 ?>
     <header class="header">
         <img src="../assets/images/logo.png" alt="logo voiture" class="logo">
@@ -14,7 +15,12 @@
             </ul>
         </nav>
         <div class="btn-container">
-            <a href="../pages/login.php" class="nav-btn">Se connecter</a>
-            <a href="../pages/signin.php" class="nav-btn nav-btn-2">S'inscrire</a>
+            <?php if($isConnected): ?>
+                <a href="../pages/utilisateur.php" class="nav-btn">Mon compte</a>
+                <a href="../pages/logout.php" class="nav-btn nav-btn-2">Déconnexion</a>
+            <?php else: ?>
+                <a href="../pages/login.php" class="nav-btn">Se connecter</a>
+                <a href="../pages/signin.php" class="nav-btn nav-btn-2">S'inscrire</a>
+            <?php endif; ?>
         </div>
     </header>

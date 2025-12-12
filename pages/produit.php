@@ -1,7 +1,6 @@
 <?php
 //connection
 require_once '../pages/config.php';
-session_start();
 
 // Si l'utilisateur n'est pas connecté → redirection
 if (!isset($_SESSION['user_id'])) {
