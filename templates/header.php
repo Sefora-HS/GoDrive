@@ -17,7 +17,7 @@
         <div class="btn-container">
             <?php if($isConnected): ?>
                 <a href="../pages/utilisateur.php" class="nav-btn">Mon compte</a>
-                <a href="../pages/logout.php" class="nav-btn nav-btn-2">Déconnexion</a>
+                <a href="../pages/logout.php" class="nav-btn nav-btn-2">Deconnexion</a>
             <?php else: ?>
                 <a href="../pages/login.php" class="nav-btn">Se connecter</a>
                 <a href="../pages/signin.php" class="nav-btn nav-btn-2">S'inscrire</a>
