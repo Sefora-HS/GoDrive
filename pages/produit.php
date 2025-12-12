@@ -2,34 +2,22 @@
 //connection
 require_once '../pages/config.php';
 
-/* ---------- Connexion à la base de données ----------
-try {
-    $pdo = new PDO(
-        "mysql:host=localhost;dbname=consessionnaire;charset=utf8",
-        "root",
-        ""
-    );
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    die("Erreur : " . $e->getMessage());
-}
-
-*/
-
 // ----------  Récupérer l'ID du produit dans l'URL ---------
 if (!isset($_GET['id'])) {
     echo "Aucun produit sélectionné.";
     exit;
 }
 
-$vehicule = (int) $_GET['id']; // Sécurisation simple
+$vehicule_id = (int) $_GET['id']; // Sécurisation simple
 
 
 
 // récupérer les informtions du vehicule 
-$stmt = $pdo->prepare("SELECT * FROM vehicules WHERE id = ?");
+$stmt = $bdd->prepare("SELECT * FROM vehicules WHERE id = ?");
 $stmt->execute([$vehicule_id]);
-$vehicule = $stmt->fetch();
+$vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+$nb_places = $vehicule['nb_places'];
+
 
 
 // ---------- 4. Vérifier si le produit existe ----------

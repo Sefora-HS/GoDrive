@@ -9,36 +9,58 @@ require_once '../pages/config.php';
     //initialisation du tableau parametres pour stockés les données renvoyés
     $parametres = [];
 
-    //on recupere la valeur de marque et on effectue des tests (present, vide)
+    //on recupere la valeur de marque et on effectue des tests (present, null)
     if(isset($_GET['marque']) && $_GET['marque'] !== "") {
-        $sql .= "AND marque = :marque";
+        $sql .= " AND marque = :marque";
         $parametres[':marque'] = $_GET['marque'];
     }
 
     //on recupere la valeur de prix et effectuons les même tests
     if (isset($_GET['prix']) && $_GET['prix'] !== ""){
         if (is_numeric($_GET['prix'])) {
-            $sql .= "AND prix_jour <= :prix";
-            $parametres[':prix'] = $prix;
+            $sql .= " AND prix_jour <= :prix";
+            $parametres[':prix'] = $_GET['prix'];
         }
     }
 
-    
+    //on recupere la valeur de l'annee 
+     if(isset($_GET['annee']) && $_GET['annee'] !== "") {
+        $sql .= " AND annee_vehicule >= :annee";
+        $parametres[':annee'] = $_GET['annee'];
+    }
 
     //on recupere la valeur de nb_places et effectuons les même tests 
     if (isset($_GET['nb_places']) && $_GET['nb_places'] !== "") {
     $sql .= " AND nb_places = :nb";
-    $params[':nb'] = $_GET['nb_places'];
+    $parametres[':nb'] = $_GET['nb_places'];
     }
+
+    if (!empty($_GET['date_debut']) && !empty($_GET['date_fin'])) {
+    $sql .= "
+        AND id NOT IN (
+            SELECT id_vehicule
+            FROM reservation
+            WHERE NOT (
+                :date_fin < date_debut
+                OR :date_debut > date_fin
+            )
+        )
+    ";
+    $parametres[':date_debut'] = $_GET['date_debut'];
+    $parametres[':date_fin'] = $_GET['date_fin'];
+    }
+
+
 
     //preparation de la requete
     $requete = $bdd->prepare($sql); 
     //execution de la requete
-    $requete->execute($params);
+    $requete->execute($parametres);
     //retourne sous forme de tableau associatif pour l'insertion 
     $vehicules = $requete->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,15 +84,39 @@ include('../templates/header.php');
 
      <div class="separator"></div>
 
-    <?php
-    $requete = $bdd->prepare("SELECT * FROM vehicules ORDER BY prix_jour ASC");
-    $requete->execute();
-    $vehicules = $requete->fetchAll(PDO::FETCH_ASSOC);
+     <div class="barre-filtre">
+        <form class="barre-filtres" method="GET">
 
-    if (!$vehicules) {
-        echo "<p class='message-vide'>Aucun véhicule disponible pour le moment.</p>";
-    }
-    ?>
+            <select name="marque">
+                <option value="">Marque</option>
+                <option value="Renault">Renault</option>
+                <option value="Peugeot">Peugeot</option>
+                <option value="BMW">BMW</option>
+                <option value="Mercedes">Mercedes</option>
+                <option value="Nissan">Nissan</option>
+            </select>
+
+            <input type="number" name="annee" placeholder="Année min" value="<?php echo $_GET['annee'] ?? ''; ?>">
+
+            <input type="date" name="date_debut" value="<?php echo $_GET['date_debut'] ?? ''; ?>" placeholder="Date début">
+
+            <input type="date" name="date_fin" value="<?php echo $_GET['date_fin'] ?? ''; ?>" placeholder="Date fin">
+
+
+            <input type="number" name="prix" placeholder="Prix max (€)" value="<?php echo $_GET['prix'] ?? ''; ?>">
+
+            <select name="nb_places">
+                <option value="">Places</option>
+                <option value="2">2 places</option>
+                <option value="4">4 places</option>
+                <option value="5">5 places</option>
+                <option value="7">7 places</option>
+            </select>
+
+            <button type="submit" class="btn-filtre">Filtrer</button>
+        </form>
+
+     </div>
 
     <section class="grille-catalogue">
 
