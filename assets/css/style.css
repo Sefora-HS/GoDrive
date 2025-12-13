@@ -38,7 +38,7 @@ h1 {
   
 }
 
-h1::after {
+.h1-produit::after {
   content: "";
   display: block;
   width: 80%;
@@ -929,3 +929,4 @@ summary {
 
 .container-prod {
   display: flex; 
+}

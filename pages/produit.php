@@ -65,7 +65,7 @@ if (!$vehicule) {
     <main>
 
 
-        <h1>
+        <h1 class="h1-produit">
             <?= htmlspecialchars($vehicule['nom_vehicule']) ?>
         </h1>
 <div class="container-prod">
