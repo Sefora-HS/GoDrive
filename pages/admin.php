@@ -5,22 +5,98 @@ require_once '../pages/config.php';
 <?php
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
+?>
+
+<?php
 function renderPage($page) {
+    global $bdd;
     echo "<div class='admin-card'>";
 
     switch ($page) {
         case 'home':
             echo "<h2>Accueil</h2><p>Bienvenue dans l'administration.</p>";
             break;
+
         case 'users':
-            echo "<h2>Utilisateurs</h2><p>Gestion des utilisateurs</p>";
+            echo "<h2>Utilisateurs</h2>";
+            
+            // Récupération des utilisateurs depuis la BDD
+            global $bdd; // utilise la connexion PDO de config.php
+            $users = $bdd->query("SELECT id, nom, email FROM utilisateurs")->fetchAll(PDO::FETCH_ASSOC);
+
+            // Tableau HTML
+            echo "<table border='1' class='admin-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($users as $u) {
+                echo "<tr>
+                        <td>{$u['id']}</td>
+                        <td>{$u['nom']}</td>
+                        <td>{$u['email']}</td>
+                      </tr>";
+            }
+            echo "</tbody></table>";
             break;
+
         case 'reservations':
-            echo "<h2>Articles</h2><p>Création et gestion des articles.</p>";
+            echo "<h2>Réservations</h2>";
+            
+            // Exemple : récupérer les réservations
+            $reservation = $bdd->query("SELECT id, id_vehicule,id_utilisateur, date_debut, date_fin, message, total FROM reservation")->fetchAll(PDO::FETCH_ASSOC);
+
+            echo "<table border='1' class='admin-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Voiture</th>
+                            <th>Date</th>
+                            <th>Utilisateur ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($reservation as $r) {
+                echo "<tr>
+                        <td>{$r['id']}</td>
+                        <td>{$r['voiture']}</td>
+                        <td>{$r['date_reservation']}</td>
+                        <td>{$r['utilisateur_id']}</td>
+                      </tr>";
+            }
+            echo "</tbody></table>";
             break;
+
         case 'contact':
-            echo "<h2>Contact</h2><p>gestions du formulaire de contact.</p>";
+            echo "<h2>Messages de contact</h2>";
+            
+            $messages = $bdd->query("SELECT id, nom, email, message FROM contact")->fetchAll(PDO::FETCH_ASSOC);
+
+            echo "<table border='1' class='admin-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($messages as $m) {
+                echo "<tr>
+                        <td>{$m['id']}</td>
+                        <td>{$m['nom']}</td>
+                        <td>{$m['email']}</td>
+                        <td>{$m['message']}</td>
+                      </tr>";
+            }
+            echo "</tbody></table>";
             break;
+
         default:
             echo "<h2>404</h2><p>La page demandée n'existe pas.</p>";
             break;
@@ -29,6 +105,7 @@ function renderPage($page) {
     echo "</div>";
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
