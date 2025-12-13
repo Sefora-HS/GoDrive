@@ -68,33 +68,41 @@ if (!$vehicule) {
         <h1>
             <?= htmlspecialchars($vehicule['nom_vehicule']) ?>
         </h1>
-
+<div class="container-prod">
+    <div class="colonne-prod">
 
         <img src="images/<?= htmlspecialchars($vehicule['image']) ?>"
             alt="<?= htmlspecialchars($vehicule['nom_vehicule']) ?>">
+    </div>
+     <div class="colonne-prod">
         
         <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicule['nom_vehicule']) ?> </div>
-
+<div class="container-prod">
+       <div class="colonne-prod">
         <div class="date-wrapper">
             <label for="dateDebut">Date début</label>
             <input type="date" id="dateDebut" name="dateDebut">
         </div>
+       </div>
+       <div class="colonne-prod">
         <div class="date-wrapper">
             <label for="dateFin">Date fin</label>
             <input type="date" id="dateFin" name="dateFin">
         </div>
+       </div>
 
 // description voiture 
         <p class="description">
             <?= htmlspecialchars($vehicule['description']) ?>
         </p>
 
-        // prix voiture 
+    // prix voiture 
         <p class="prix">
             Total : <?= htmlspecialchars($vehicule['prix_jour']) ?> €
         </p>
-
-
+         
+     </div>
+</div>
         <p class="information">
             Une fois votre réservation validée, retrouvez votre récapitulatif de commande su votre compte dans la rubrique <a href="./mesreservations">"Mes réservations"</a>
         </p>
