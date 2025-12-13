@@ -79,7 +79,13 @@ if (!$vehicule) {
         <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicules['nom_vehicule']) ?> </div>
 <div class="container-prod">
        <div class="colonne-prod">
+
+
+           
            <form action="reservation.php" method="POST">
+               <input type="hidden" name="vehicule_id" value="<?= $vehicules['id'] ?>">
+
+               
                <label> // Date de début location 
         <div class="date-wrapper">
         Date début
@@ -127,6 +133,31 @@ if (!$vehicule) {
     // Inclut le header
     include('../templates/footer.php');
     ?>
+
+                <script> // avoir le prix qui s'affiche direct sure la page
+                    
+const prixJour = <?= $vehicule['prix_jour'] ?>;
+
+const debut = document.querySelector('[name="date_debut"]');
+const fin   = document.querySelector('[name="date_fin"]');
+const prix  = document.getElementById('prix');
+
+function calculPrix() {
+  if (debut.value && fin.value) {
+    const d1 = new Date(debut.value);
+    const d2 = new Date(fin.value);
+    const jours = (d2 - d1) / (1000 * 60 * 60 * 24);
+
+    if (jours > 0) {
+      prix.textContent = jours * prixJour;
+    }
+  }
+}
+
+debut.addEventListener('change', calculPrix);
+fin.addEventListener('change', calculPrix);
+</script>
+
 </body>
 
 
