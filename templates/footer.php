@@ -22,7 +22,7 @@
 
         <div class="footer-form">
             <h2 class="footer-title">Newsletter</h2>
-            <form action="newsletter.php" method="post" class="newsletter-form">
+            <form action="../pages/newsletter.php" method="post" class="newsletter-form">
                 <input type="email" name="email" placeholder="Votre email" class="footer-form-input" required>
                 <button class="footer-form-btn" type="submit">S'inscrire</button>
             </form>
