@@ -1,5 +1,45 @@
 <?php
 require_once '../pages/config.php';
+
+// securisations éléments 
+// 1-Nom 
+echo htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+
+if ($nom === '') {
+    $erreurs[] = "Le nom est obligatoire";
+}
+if (strlen($nom) > 100) {
+    $erreurs[] = "Le nom est trop long";
+}
+if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+    $erreurs[] = "Le nom contient des caractères invalides";
+}
+
+//mail 
+if (!filter_var($email, FILTER_VALIDATE_EMAIL){
+    echo "Attention, adresse email invalide"; 
+$email=""
+    }
+
+
+
+//envoyer par mail à l'entreprise le contenu du message envoyer par la page 
+if ($_SERVER['REQUEST_METHOD']==='POST'){
+
+    $nom = trim($_POST['nom']);
+    $email = trim($_POST['email']);
+    $message = trim($_POST['message']);
+
+    if ( $nom && filter_var(*email, FILTER_VALIDATE_EMAIL) && $message) {
+        
+ // le message laissé dans la page est envoyé au mail pro de l'entreprise
+        mail(
+            "aya.treyaoui@etu.unilim.fr" , // contact d'un membre de l'équipe pour tester et exploiter les fonctionnalités mais le véritable mail doit être le pro de l'entreprise
+            " Message laissé par $nom ($email), 
+            "Message laissé: <br> $message ", 
+            ); 
+
+            echo 
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +79,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le header
+// Inclut le footer
 include('../templates/footer.php');
 ?>
 </body>
