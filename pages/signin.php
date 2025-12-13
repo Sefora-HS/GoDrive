@@ -1,5 +1,69 @@
 <?php
 require_once '../pages/config.php';
+
+$erreur = "";
+$succes = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // 1. Récupération et sécurisation
+    $nom        = trim($_POST['nom']);
+    $prenom     = trim($_POST['prenom']);
+    $identifiant= trim($_POST['id']);
+    $email      = trim($_POST['email']);
+    $password   = $_POST['password'];
+    $password2  = $_POST['password-confirm'];
+
+    // 2. Vérification champs vides
+    if (empty($nom) || empty($prenom) || empty($identifiant) || empty($email) || empty($password) || empty($password2)) {
+        $erreur = "Tous les champs sont obligatoires.";
+    }
+
+    // 3. Vérification email
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $erreur = "Adresse email invalide.";
+    }
+
+    // 4. Vérification mots de passe
+    elseif ($password !== $password2) {
+        $erreur = "Les mots de passe ne correspondent pas.";
+    }
+
+    // 5. Vérifier si identifiant ou email existe déjà
+    else {
+        $check = $bdd->prepare("SELECT id FROM utilisateurs WHERE identifiant = :identifiant OR email = :email");
+        $check->execute([
+            ':identifiant' => $identifiant,
+            ':email' => $email
+        ]);
+
+        if ($check->rowCount() > 0) {
+            $erreur = "Identifiant ou email déjà utilisé.";
+        } else {
+
+            // 6. Hash du mot de passe
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+            // 7. Insertion
+            $insert = $bdd->prepare("
+                INSERT INTO utilisateurs 
+                (identifiant, motdepasse, nom, prenom, email, adresse, ville, code_postal, role)
+                VALUES 
+                (:identifiant, :motdepasse, :nom, :prenom, :email, '', '', '', 'client')
+            ");
+
+            $insert->execute([
+                ':identifiant' => $identifiant,
+                ':motdepasse'  => $passwordHash,
+                ':nom'         => $nom,
+                ':prenom'      => $prenom,
+                ':email'       => $email
+            ]);
+
+            $succes = "Inscription réussie ! Vous pouvez vous connecter.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +86,7 @@ include('../templates/header.php');
     <section class="signin-section">
         <img src="../assets/images/logo.png" alt="logo site" class="login-img">
         <h2 class="login-title">Inscription</h2>
-        <form action="" method="" class="signin-form">
+        <form action="" method="post" class="signin-form">
             <div class="signin-inputs">
                 <div class="bloc">
                     <input name="nom" type="text" placeholder="Nom : " class="signin-input" required>
@@ -39,6 +103,13 @@ include('../templates/header.php');
 
             <button type="submit">Je m'inscris</button>
         </form>
+        <?php if (!empty($erreur)): ?>
+            <p class="error"><?= htmlspecialchars($erreur) ?></p>
+        <?php endif; ?>
+
+        <?php if (!empty($succes)): ?>
+            <p class="success"><?= htmlspecialchars($succes) ?></p>
+        <?php endif; ?>
     </section>
 </main>
 <?php
