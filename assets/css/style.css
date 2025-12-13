@@ -10,6 +10,7 @@
     --bleu-fonce : #044873;
     --background : #eef1ff;
     --white : #ffffff;
+  --grey: #565656;
 }
 
 body {
@@ -19,6 +20,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100%;
+  color: var(--grey);
 }
 
 ul {
@@ -29,6 +31,28 @@ a {
     text-decoration: none;
 }
 
+
+h1 { 
+  color: var(--bleu-fonce);
+  text-transform: uppercase; 
+  
+}
+
+h1::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 2px;
+  background: var(--grey);
+  margin-top: 10px;
+}
+
+
+h2{
+  color: var(--grey); 
+  text-transform: uppercase;
+}
+  
 
 .header {
     height: 15vh;
@@ -896,3 +920,12 @@ summary {
     padding: 1rem 3rem;
     letter-spacing: 1px;
 }
+
+.pill-btn {
+  background: var(--bleu-fonce);
+  color: var(--white);
+  border-radius: 60px; 
+}
+
+.container-prod {
+  display: flex; 
