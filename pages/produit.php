@@ -72,6 +72,7 @@ if (!$vehicule) {
 
         <img src="images/<?= htmlspecialchars($vehicule['image']) ?>"
             alt="<?= htmlspecialchars($vehicule['nom_vehicule']) ?>">
+        
         <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicule['nom_vehicule']) ?> </div>
 
         <div class="date-wrapper">
@@ -83,22 +84,12 @@ if (!$vehicule) {
             <input type="date" id="dateFin" name="dateFin">
         </div>
 
-        <div class="input-box">
-            <select name="places" required>
-                <option value="" disabled selected>NBR DE PLACES</option>
-
-                <?php
-                for ($i = 1; $i <= $nb_places; $i++) {
-                    echo "<option value='$i'>$i place" . ($i > 1 ? 's' : '') . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-
+// description voiture 
         <p class="description">
             <?= htmlspecialchars($vehicule['description']) ?>
         </p>
 
+        // prix voiture 
         <p class="prix">
             Total : <?= htmlspecialchars($vehicule['prix_jour']) ?> €
         </p>
@@ -108,6 +99,8 @@ if (!$vehicule) {
             Une fois votre réservation validée, retrouvez votre récapitulatif de commande su votre compte dans la rubrique <a href="./mesreservations">"Mes réservations"</a>
         </p>
 
+
+    //bouton réserver
 
         <button class="pill-btn" aria-label="Réserver">
             Réserver
