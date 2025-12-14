@@ -17,11 +17,44 @@ function renderPage($page) {
             echo "<h2>Accueil</h2><p>Bienvenue dans l'administration.</p>";
             break;
 
+        case 'vehicules':
+            echo "<h2>Gestionnaires véhicules</h2>";
+
+            $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places  FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
+
+            echo "<table border='1' class='admin-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Marque</th>
+                            <th>Annee</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Prix_jour</th>
+                            <th>Nbr Places</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($vehicules as $v) {
+    echo "<tr>
+            <td>{$v['id']}</td>
+            <td>{$v['nom_vehicule']}</td>
+            <td>{$v['marque']}</td>
+            <td><img src="../assets/images/" . "htmlspecialchars($v['image'])"></td>
+            <td>{$v['description']}</td>
+            <td>{$v['image']}</td>
+            <td>{$v['prix_jour']}</td>
+            <td>{$v['nb_places']}</td>
+          </tr>";
+}
+
+            echo "</tbody></table>";
+            break;
+
         case 'users':
             echo "<h2>Utilisateurs</h2>";
-            
-            // Récupération des utilisateurs depuis la BDD
-            global $bdd; // utilise la connexion PDO de config.php
+
             $users = $bdd->query("SELECT id, nom, email FROM utilisateurs")->fetchAll(PDO::FETCH_ASSOC);
 
             // Tableau HTML
@@ -134,6 +167,12 @@ function renderPage($page) {
                 <li>
                     <a href="admin.php?page=home" class="<?= $page === 'home' ? 'active' : '' ?>">
                         <img src="../assets/images/dashboard.png" class="icon" alt=""> Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="admin.php?page=vehicules" class="<?= $page === 'vehicules' ? 'active' : '' ?>">
+                        <img src="../assets/images/dashboard.png" class="icon" alt=""> Vehicules
                     </a>
                 </li>
 

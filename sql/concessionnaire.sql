@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2025 at 01:16 PM
+-- Generation Time: Dec 13, 2025 at 02:44 PM
 -- Server version: 8.4.7
 -- PHP Version: 8.3.28
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE IF NOT EXISTS `contact` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `email` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nom` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `email` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
 DROP TABLE IF EXISTS `newsletter`;
 CREATE TABLE IF NOT EXISTS `newsletter` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `email` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `message` text COLLATE utf8mb3_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_utilisateur` (`id_utilisateur`),
   KEY `id_vehicule` (`id_vehicule`)
@@ -80,17 +80,17 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 DROP TABLE IF EXISTS `reservation_rapide`;
 CREATE TABLE IF NOT EXISTS `reservation_rapide` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `prenom` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `email` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `adresse` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `ville` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nom` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `prenom` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `email` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `adresse` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `ville` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `code_postal` int NOT NULL,
   `id_vehicule` int NOT NULL,
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
   `total` decimal(10,0) NOT NULL,
-  `message` text COLLATE utf8mb3_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_id_vehicule_3` (`id_vehicule`)
@@ -107,13 +107,13 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `identifiant` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `motdepasse` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-  `nom` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `prenom` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `email` varchar(30) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `adresse` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `ville` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `code_postal` varchar(5) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `role` enum('client','admin') COLLATE utf8mb3_unicode_ci NOT NULL,
+  `nom` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `prenom` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `email` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `adresse` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `ville` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `code_postal` varchar(5) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `role` enum('client','admin') CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `identifiant` (`identifiant`),
   UNIQUE KEY `email_unique` (`email`)
@@ -138,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   `nom_vehicule` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `marque` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `annee_vehicule` year NOT NULL,
-  `description` text COLLATE utf8mb3_unicode_ci NOT NULL,
-  `image` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `image` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `prix_jour` decimal(10,0) NOT NULL,
   `nb_places` int NOT NULL,
   PRIMARY KEY (`id`)
@@ -150,11 +150,8 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
 --
 
 INSERT INTO `vehicules` (`id`, `nom_vehicule`, `marque`, `annee_vehicule`, `description`, `image`, `prix_jour`, `nb_places`) VALUES
-(1, 'Peugeot 206', 'Peugeot', '1998', 'Petite citadine économique, parfaite pour les trajets quotidiens.', 'peugeot206.jpg', 30, 5),
-(2, 'Nissan Qashqai', 'Nissan', '2007', 'SUV confortable, idéal pour les familles et les longs trajets.', 'qashqai.jpg', 55, 5),
-(3, 'Renault Clio 4', 'Renault', '2015', 'Voiture moderne, faible consommation et conduite agréable.','clio4.jpg',40, 5),
-(4, 'Audi A3', 'Audi', '2018', 'Berline premium, idéale pour ceux cherchant confort et performance.','audi_a3.jpg',75, 5),
-(5, 'BMW X5', 'BMW', '2020', 'SUV haut de gamme, puissant et parfait pour longs trajets.','bmw_x5.jpg',120, 7);
+(1, 'Peugeot 206', 'Peugeot', '1998', '', '206.jpg', 50, 5),
+(2, 'Nissan Qashqai', 'Nissan', '2007', '', '', 0, 0);
 
 --
 -- Constraints for dumped tables
