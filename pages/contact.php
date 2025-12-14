@@ -125,7 +125,7 @@ include('../templates/header.php');
                 <input type="email" name="email" placeholder="Adresse mail" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>" required>
             </div>
             
-            <textarea name="message" placeholder="Votre message..." class="input-msg" rows="6" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
+            <textarea name="message" placeholder="Votre message..." class=" " rows="6" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
 
             <button type="submit">Nous contacter</button>
         </form>
