@@ -51,10 +51,10 @@ if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
     
     // 3- Message 
     if (!empty($_POST["message"])){
-        $message = trim($_POST['message'];
+        $message = trim($_POST['message']);
         $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
     } else{
-        $erreurs[]= "Veuillez saisir votre message. <br<" ;
+        $erreurs[]= "Veuillez saisir votre message. <br>" ;
         $message =''; 
     }
         
