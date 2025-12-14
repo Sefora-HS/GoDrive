@@ -1,5 +1,79 @@
 <?php
 require_once '../pages/config.php';
+
+// récupérer et stocker données  
+if ($_SERVER['REQUEST_METHOD']==='POST'){
+  $erreurs = [];
+    
+    // 1-Nom 
+    if (!empty($_POST["nom"])){
+          $nom = trim($_POST['nom']);
+        $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+      if ($nom === '') {
+    $erreurs[] = "Le nom est obligatoire";
+}
+if (strlen($nom) > 100) {
+    $erreurs[] = "Le nom est trop long";
+}
+if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+    $erreurs[] = "Le nom contient des caractères invalides";
+}
+
+          if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+            $erreurs[] = "Le nom contient des caractères invalides.";
+        } 
+    } else {
+         $erreurs[] = "Attention le nom n'est pas valide. <br> Veuillez saisir votre nom. <br>";
+        $nom="";
+            }
+// 2-Email
+      if (!empty($_POST["email"])){
+          $email = trim($_POST['email']);
+           if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $email='';
+     $erreurs[]= "Attention le mail n'est pas valide.<br> Veuillez saisir votre adressse électronique.";
+           }
+      } else {
+          erreurs[]= "Attention le mail n'est pas valide. <br> Veuillez saisir votre adresse éléctronique. <br> ";
+          $email=''; 
+      }
+
+  if (!empty($erreurs)) {
+        foreach ($erreurs as $erreur) {
+            echo "<p style='color:red;'>$erreur</p>";
+        }
+    } else {
+        echo "<p style='color:green;'>Formulaire valide !</p>";
+        // Ici tu peux insérer en base ou envoyer le mail
+    }
+}
+
+    
+    // 3- Message 
+    if (!empty($_POST["message"])){
+        $message = trim($_POST['message']);
+        $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+    } else{
+        $erreurs[]= "Veuillez saisir votre message. <br>" ;
+        $message =''; 
+    }
+        
+             
+        
+        
+
+
+//envoyer par mail à l'entreprise le contenu du message envoyer par la page
+ // le message laissé dans la page est envoyé au mail pro de l'entreprise
+    if ( $nom && filter_var(*email, FILTER_VALIDATE_EMAIL) && $message) {
+        
+        mail(
+            "aya.treyaoui@etu.unilim.fr" , // contact d'un membre de l'équipe pour tester et exploiter les fonctionnalités mais le véritable mail doit être le pro de l'entreprise
+            " Message laissé par $nom ($email), 
+            "Message laissé: <br> $message ", 
+            ); 
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +113,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le header
+// Inclut le footer
 include('../templates/footer.php');
 ?>
 </body>

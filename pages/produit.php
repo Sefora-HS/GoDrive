@@ -66,39 +66,50 @@ if (!$vehicule) {
 
 
         <h1 class="h1-produit">
-            <?= htmlspecialchars($vehicule['nom_vehicule']) ?>
+            <?= htmlspecialchars($vehicules['nom_vehicule']) ?>
         </h1>
 <div class="container-prod">
     <div class="colonne-prod">
 
-        <img src="images/<?= htmlspecialchars($vehicule['image']) ?>"
-            alt="<?= htmlspecialchars($vehicule['nom_vehicule']) ?>">
+        <img src="images/<?= htmlspecialchars($vehicules['image']) ?>"
+            alt="<?= htmlspecialchars($vehicules['nom_vehicule']) ?>">
     </div>
      <div class="colonne-prod">
         
-        <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicule['nom_vehicule']) ?> </div>
+        <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicules['nom_vehicule']) ?> </div>
 <div class="container-prod">
        <div class="colonne-prod">
+
+
+           
+           <form action="reservation.php" method="POST">
+               <input type="hidden" name="vehicule_id" value="<?= $vehicules['id'] ?>">
+
+               
+               <label> // Date de début location 
         <div class="date-wrapper">
-            <label for="dateDebut">Date début</label>
+        Date début
             <input type="date" id="dateDebut" name="dateDebut">
         </div>
+                   </label>
        </div>
+               <label> //Date fin location 
        <div class="colonne-prod">
         <div class="date-wrapper">
-            <label for="dateFin">Date fin</label>
+            <Date fin
             <input type="date" id="dateFin" name="dateFin">
         </div>
+       </label>
        </div>
 
 // description voiture 
         <p class="description">
-            <?= htmlspecialchars($vehicule['description']) ?>
+         Prix total : <span id="prix">—</span> €
         </p>
 
     // prix voiture 
         <p class="prix">
-            Total : <?= htmlspecialchars($vehicule['prix_jour']) ?> €
+            Total : <?= htmlspecialchars($vehicules['prix_jour']) ?> €
         </p>
          
      </div>
@@ -109,11 +120,11 @@ if (!$vehicule) {
 
 
     //bouton réserver
-
-        <button class="pill-btn" aria-label="Réserver">
+        <button type="submit" class="pill-btn" aria-label="Réserver">
             Réserver
         </button>
-
+                   
+</form>
 
 
 
@@ -122,6 +133,31 @@ if (!$vehicule) {
     // Inclut le header
     include('../templates/footer.php');
     ?>
+
+                <script> // avoir le prix qui s'affiche direct sure la page
+                    
+const prixJour = <?= $vehicule['prix_jour'] ?>;
+
+const debut = document.querySelector('[name="date_debut"]');
+const fin   = document.querySelector('[name="date_fin"]');
+const prix  = document.getElementById('prix');
+
+function calculPrix() {
+  if (debut.value && fin.value) {
+    const d1 = new Date(debut.value);
+    const d2 = new Date(fin.value);
+    const jours = (d2 - d1) / (1000 * 60 * 60 * 24);
+
+    if (jours > 0) {
+      prix.textContent = jours * prixJour;
+    }
+  }
+}
+
+debut.addEventListener('change', calculPrix);
+fin.addEventListener('change', calculPrix);
+</script>
+
 </body>
 
 

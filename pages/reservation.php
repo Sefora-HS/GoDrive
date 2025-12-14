@@ -1,5 +1,9 @@
 <?php
 require_once '../pages/config.php';
+// Si on vient depuis une page produit alors saisir les données de la page ( dates et id véhicule) sinon on laisse cet données vide 
+$dateDebut = $_POST['date_debut'] ?? '';
+$dateFin   = $_POST['date_fin'] ?? '';
+$vehiculeId = $_POST['vehicule_id'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +57,16 @@ include('../templates/header.php');
 
             <div class="left-reservation">
                 <?php 
+  <input
+      type="date"
+      name="date_debut"
+      value="<?= htmlspecialchars($dateDebut) ?>"
+    >
+      <input
+      type="date"
+      name="date_fin"
+      value="<?= htmlspecialchars($dateFin) ?>"
+    >
                     //affichage de la voiture et choix reservation
                  ?>
                 <button type="submit">Reserver ➡</button>
