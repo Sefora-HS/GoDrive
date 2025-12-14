@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
     // Inclut le header
     include('../templates/header.php');
     ?>
-    <main>
+    <main class="main">
 
         <h1 class="h1-produit">
             <?= htmlspecialchars($vehicule['nom_vehicule']) ?>
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
 
                     <div class="reservation-grid">
                         <div class="date-wrapper">
-                            <label for="dateDebut">Date de début</label>
+                            <label for="dateDebut">Date de debut</label>
                             <input type="date" id="dateDebut" name="date_debut" min="<?= date('Y-m-d') ?>" required>
                         </div>
 
@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
                     </div>
 
                     <p class="information">
-                        Une fois votre réservation validée, retrouvez votre récapitulatif de commande sur votre compte dans la rubrique <a href="./moncompte.php">"Mon compte"</a>
+                        Une fois votre réservation validée, retrouvez votre récapitulatif de commande sur votre compte dans la rubrique <a href="../pages/utilisateur.php">"Mon compte"</a>
                     </p>
 
                     <!-- Bouton réserver -->

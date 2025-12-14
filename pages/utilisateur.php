@@ -58,25 +58,13 @@ $mesReservations = $reservations->fetchAll(PDO::FETCH_ASSOC);
 include('../templates/header.php');
 ?>
 <main>
-    <h1>Mon Compte</h1>
-    <hr>
+    <h1 class="compte-h1">Mon Compte</h1>
+    <hr class="compte-hr">
 
     <section class="moncompte-section">
 
-        <div class="moncompte-infos">
-            <form action="" class="infos-compte">
-                <input type="text" name="nom" placeholder="Nom :" value="<?= htmlspecialchars($user['nom']) ?>">
-                <input type="text" name="prenom" placeholder="Prénom :" value="<?= htmlspecialchars($user['prenom']) ?>">
-                <input type="email" name="email" placeholder="Adresse Mail :" value="<?= htmlspecialchars($user['email']) ?>">
-                <input name="password" type="password" placeholder="Mot de passe : ">
-                <input type="text" name="adresse" placeholder="Adresse :" value="<?= htmlspecialchars($user['adresse']) ?>">
-                <input type="text" name="ville" placeholder="Ville :" value="<?= htmlspecialchars($user['ville']) ?>">
-                <input type="text" name="code_postal" placeholder="Code postal :" value="<?= htmlspecialchars($user['code_postal']) ?>">
-            </form>
-        </div>
-
         <div class="mes-reservations">
-            <h2>Mes réservations</h2>
+            <h2>Mes reservations</h2>
             
             <?php if (empty($mesReservations)): ?>
                 <p>Vous n'avez aucune réservation pour le moment.</p>
@@ -87,25 +75,27 @@ include('../templates/header.php');
                             <img src="../assets/images/<?= htmlspecialchars($reservation['image']) ?>" alt="<?= htmlspecialchars($reservation['nom_vehicule']) ?>">
                         <?php endif; ?>
                         
-                        <h3><?= htmlspecialchars($reservation['marque'] . ' ' . $reservation['nom_vehicule']) ?></h3>
-                        
-                        <p><strong>Du :</strong> <?= date('d/m/Y', strtotime($reservation['date_debut'])) ?></p>
-                        <p><strong>Au :</strong> <?= date('d/m/Y', strtotime($reservation['date_fin'])) ?></p>
-                        
-                        <?php
-                        $date1 = new DateTime($reservation['date_debut']);
-                        $date2 = new DateTime($reservation['date_fin']);
-                        $interval = $date1->diff($date2);
-                        $nbJours = $interval->days;
-                        ?>
-                        
-                        <p><strong>Durée :</strong> <?= $nbJours ?> jour<?= $nbJours > 1 ? 's' : '' ?></p>
-                        <p><strong>Prix/jour :</strong> <?= htmlspecialchars($reservation['prix_jour']) ?> €</p>
-                        <p><strong>Total :</strong> <?= htmlspecialchars($reservation['total']) ?> €</p>
-                        
-                        <?php if (!empty($reservation['message'])): ?>
-                            <p><strong>Message :</strong> <?= htmlspecialchars($reservation['message']) ?></p>
-                        <?php endif; ?>
+                        <div class="reservation-content">
+                            <h3><?= htmlspecialchars($reservation['marque'] . ' ' . $reservation['nom_vehicule']) ?></h3>
+                            
+                            <p><strong>Du :</strong> <?= date('d/m/Y', strtotime($reservation['date_debut'])) ?></p>
+                            <p><strong>Au :</strong> <?= date('d/m/Y', strtotime($reservation['date_fin'])) ?></p>
+                            
+                            <?php
+                            $date1 = new DateTime($reservation['date_debut']);
+                            $date2 = new DateTime($reservation['date_fin']);
+                            $interval = $date1->diff($date2);
+                            $nbJours = $interval->days;
+                            ?>
+                            
+                            <p><strong>Durée :</strong> <?= $nbJours ?> jour<?= $nbJours > 1 ? 's' : '' ?></p>
+                            <p><strong>Prix/jour :</strong> <?= htmlspecialchars($reservation['prix_jour']) ?> €</p>
+                            <p><strong>Total :</strong> <?= htmlspecialchars($reservation['total']) ?> €</p>
+                            
+                            <?php if (!empty($reservation['message'])): ?>
+                                <p><strong>Message :</strong> <?= htmlspecialchars($reservation['message']) ?></p>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>

@@ -23,6 +23,17 @@ body {
   color: var(--grey);
 }
 
+.main {
+    margin: 0 auto;
+}
+
+.main h1 {
+    text-align: center;
+    font-size: 4rem;
+    border-bottom: 3px solid var(--bleu-fonce) ;
+    padding-bottom: 1rem;
+}
+
 ul {
     list-style: none;
 }
@@ -36,15 +47,6 @@ h1 {
   color: var(--bleu-fonce);
   text-transform: uppercase; 
   
-}
-
-.h1-produit::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: 2px;
-  background: var(--grey);
-  margin-top: 10px;
 }
 
 
@@ -211,7 +213,6 @@ h2{
     box-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
 
-/* Page Index */
 .section-index {
     min-height: 85vh;
     display: flex;
@@ -312,7 +313,6 @@ h2{
     height: 7rem;
 }
 
-/* Login page */
 
 .login-section, .signin-section {
     height: 80vh;
@@ -802,7 +802,6 @@ summary {
     object-fit: contain;
 }
 
-/* Header avec bouton */
 .header-with-button {
     display: flex;
     justify-content: space-between;
@@ -820,7 +819,6 @@ summary {
     text-transform: uppercase;
 }
 
-/* Formulaire d'ajout */
 .form-container-admin {
     background: linear-gradient(135deg, #f5f8ff 0%, #e3e9ff 100%);
     padding: 2.5rem;
@@ -940,7 +938,6 @@ textarea.input-admin {
     margin-right: 0.5rem;
 }
 
-/* Actions du formulaire */
 .form-actions {
     display: flex;
     gap: 1.5rem;
@@ -983,20 +980,17 @@ textarea.input-admin {
     box-shadow: 0 8px 25px rgba(4, 72, 115, 0.3);
 }
 
-/* Style pour "Aucune image" */
 .no-image {
     color: #999;
     font-style: italic;
     font-size: 0.85rem;
 }
 
-/* Wrapper de table */
 .table-wrapper {
     overflow-x: auto;
     border-radius: 1rem;
 }
 
-/* Table admin */
 .admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -1052,7 +1046,6 @@ textarea.input-admin {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Colonnes centrées */
 .admin-table tbody tr td:nth-child(4),
 .admin-table tbody tr td:nth-child(7),
 .admin-table tbody tr td:nth-child(8) {
@@ -1193,7 +1186,6 @@ textarea.input-admin {
   display: flex; 
 }
 
-/* Informations du véhicule sélectionné dans le formulaire de réservation */
 .left-reservation {
     display: flex;
     flex-direction: column;
@@ -1234,7 +1226,6 @@ textarea.input-admin {
     box-shadow: 0 0 10px rgba(0, 100, 255, 0.3);
 }
 
-/* Card du véhicule sélectionné - Style comme l'image */
 .vehicule-info {
     background: var(--white);
     border: 2px solid #d0d0d0;
@@ -1299,4 +1290,287 @@ textarea.input-admin {
     margin-top: .5rem;
     box-shadow: 0 0 5px rgba(0,100,255,0.5);
     outline: none;
+}
+
+.container-prod {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 2rem;
+}
+
+.colonne-prod {
+    flex: 1;
+    background: var(--white);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 15px rgba(4, 72, 115, 0.15);
+    padding: 2rem;
+}
+
+.colonne-prod img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.description {
+    margin-top: 2rem;
+}
+
+.description h3 {
+    font-family: 'Koulen';
+    font-size: 2rem;
+    color: var(--bleu-fonce);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.description p {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+}
+
+.description strong {
+    color: var(--bleu-fonce);
+}
+
+.nom_vehicule_prod {
+    font-family: 'Koulen';
+    font-size: 2.5rem;
+    color: var(--bleu-fonce);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.nom_vehicule_prod::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--bleu-fonce);
+    margin-top: 0.5rem;
+    border-radius: 2px;
+}
+
+.form-reservation-produit {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.reservation-grid {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.date-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.date-wrapper label {
+    font-family: 'Koulen';
+    font-size: 0.9rem;
+    color: var(--bleu-fonce);
+    letter-spacing: 1px;
+}
+
+.date-wrapper input {
+    padding: 0.8rem 1rem;
+    border-radius: 0.8rem;
+    border: 1px solid #c0d0e8;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,100,255,0.2);
+}
+
+.date-wrapper input:focus {
+    border-color: var(--bleu-fonce);
+    box-shadow: 0 0 15px rgba(4,72,115,0.4);
+}
+
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.message-wrapper label {
+    font-family: 'Koulen';
+    font-size: 0.9rem;
+    color: var(--bleu-fonce);
+    letter-spacing: 1px;
+}
+
+.message-wrapper textarea {
+    resize: none;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    border: none;
+    font-family: 'Poppins';
+    box-shadow: 0 0 5px rgba(0,100,255,0.3);
+    outline: none;
+}
+
+.message-wrapper textarea:focus {
+    box-shadow: 0 0 20px rgba(4,72,115,0.4);
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--background);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    border: 2px solid var(--bleu-fonce);
+}
+
+.total-label {
+    font-family: 'Koulen';
+    font-size: 1.4rem;
+    color: var(--bleu-fonce);
+}
+
+.total-prix {
+    font-family: 'Koulen';
+    font-size: 1.8rem;
+    color: var(--bleu-fonce);
+}
+
+.information {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.5;
+}
+
+.information a {
+    color: var(--bleu-fonce);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.form-reservation-produit button {
+    align-self: center;
+    margin-top: 1rem;
+    padding: 0.8rem 3rem;
+    font-family: 'Koulen';
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-reservation-produit button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(4,72,115,0.4);
+}
+
+.compte-h1 {
+    font-family: 'Koulen';
+    font-size: 3.5rem;
+    color: var(--bleu-fonce);
+    text-align: center;
+    margin-top: 3rem;
+    letter-spacing: 2px;
+}
+
+.compte-hr{
+    width: 40%;
+    height: 3px;
+    background: var(--bleu-fonce);
+    border: none;
+    margin: 1rem auto 3rem auto;
+    border-radius: 2px;
+}
+
+.moncompte-section {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto 5rem auto;
+    padding: 2rem;
+}
+
+.mes-reservations {
+    flex: 1;
+    background: var(--white);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 0 15px rgba(4,72,115,0.15);
+}
+
+.mes-reservations h2 {
+    font-family: 'Koulen';
+    font-size: 2.5rem;
+    color: var(--bleu-fonce);
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.mes-reservations h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--bleu-fonce);
+    margin-top: 0.5rem;
+    border-radius: 2px;
+}
+
+.reservation-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: stretch;
+    background: var(--background);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(4,72,115,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reservation-card img {
+    width: 50%;
+    height: auto;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.reservation-card .reservation-content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.reservation-card h3 {
+    font-family: 'Koulen';
+    font-size: 1.6rem;
+    color: var(--bleu-fonce);
+    letter-spacing: 1px;
+}
+
+.reservation-card p {
+    font-size: 0.95rem;
+    color: var(--grey);
+}
+
+.reservation-card strong {
+    color: var(--bleu-fonce);
+}
+
+.reservation-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(4,72,115,0.3);
 }
