@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
 
                     <!-- Bouton réserver -->
                     <button type="submit" class="pill-btn" aria-label="Réserver">
-                        Réserver
+                        Reserver
                     </button>
 
                 </form>
