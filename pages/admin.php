@@ -241,6 +241,8 @@ function renderPage($page) {
             
             $messages = $bdd->query("SELECT id, nom, email, message FROM contact")->fetchAll(PDO::FETCH_ASSOC);
 
+            $newsletter = $bdd->query("SELECT id, email FROM newsletter")->fetchAll(PDO::FETCH_ASSOC);
+
             echo "<table class='admin-table'>
                     <thead>
                         <tr>
@@ -260,6 +262,25 @@ function renderPage($page) {
                       </tr>";
             }
             echo "</tbody></table>";
+
+            echo "<br><br>";
+
+            echo "<h2>INSCRIPTIONS A LA NEWSLETTER</h2>";
+
+            echo "<table class='admin-table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($newsletter as $n) {
+                echo "<tr>
+                        <td>" . htmlspecialchars($n['id']) . "</td>
+                        <td>" . htmlspecialchars($n['email']) . "</td>
+                      </tr>";
+            }
             break;
 
         default:

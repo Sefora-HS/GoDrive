@@ -666,17 +666,16 @@ summary {
     background-color: var(--background);
 }
 
-/* Sidebar */
+
 .admin-sidebar {
     width: 18rem;
-    background-color: #021826; /* Couleur adaptée pour logos blancs */
+    background-color: #021826; 
     padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 3rem;
 }
 
-/* Logo en haut */
 .admin-logo {
     text-align: center;
     padding: 1rem 0;
@@ -687,7 +686,7 @@ summary {
     height: auto;
 }
 
-/* Navigation */
+
 .admin-sidebar nav ul {
     display: flex;
     flex-direction: column;
@@ -703,7 +702,7 @@ summary {
     font-family: 'Koulen';
     letter-spacing: 1px;
     font-size: 1.4rem;
-    color: #ffffff; /* Texte blanc pour contraster */
+    color: #ffffff; 
     padding: .6rem 1rem;
     border-radius: .8rem;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -719,14 +718,14 @@ summary {
     color: #ffffff;
 }
 
-/* Icônes */
+
 .admin-sidebar .icon {
     width: 20px;
     height: 20px;
     object-fit: contain;
 }
 
-/* Contenu principal */
+
 .admin-content {
     flex: 1;
     padding: 3rem 4rem;
@@ -735,7 +734,7 @@ summary {
     gap: 2rem;
 }
 
-/* Header */
+
 .admin-header {
     width: 100%;
     background-color: var(--white);
@@ -750,7 +749,7 @@ summary {
     color: var(--bleu-fonce);
 }
 
-/* Cartes */
+
 .admin-card {
     background: var(--white);
     border-radius: 1rem;
@@ -758,7 +757,7 @@ summary {
     box-shadow: 0 0 10px rgba(4,72,115,0.1);
 }
 
-/* Boutons */
+
 .admin-btn {
     background-color: var(--bleu-fonce);
     color: var(--white);
@@ -775,10 +774,9 @@ summary {
     transform: scale(1.05);
 }
 
-/* Bouton de déconnexion */
 .admin-logout {
-    margin-top: auto; /* pousse le bouton tout en bas */
-    background-color: #ff4d4d; /* rouge pour contraste */
+    margin-top: auto;
+    background-color: #ff4d4d; 
     color: #ffffff;
     border: none;
     font-family: 'Koulen';
@@ -1290,4 +1288,15 @@ textarea.input-admin {
     font-weight: 600;
     display: inline-block;
     margin-top: 0.3rem;
+}
+
+.input-msg {
+    background-color: var(--white);
+    padding: 1rem 2rem;
+    font-family: 'poppins';
+    border: none;
+    border-radius: .5rem;
+    margin-top: .5rem;
+    box-shadow: 0 0 5px rgba(0,100,255,0.5);
+    outline: none;
 }
