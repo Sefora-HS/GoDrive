@@ -1,7 +1,7 @@
 <?php
 require_once '../pages/config.php';
 
-// Traitement du formulaire d'ajout AVANT tout affichage
+// rcuperation des elements du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_vehicule'])) {
     $nom = htmlspecialchars($_POST['nom_vehicule']);
     $marque = htmlspecialchars($_POST['marque']);
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_vehicule'])) 
     $prix = floatval($_POST['prix_jour']);
     $places = intval($_POST['nb_places']);
     
-    // Gestion de l'upload d'image
+    // Aide l'ia pour cette partie
     $image_name = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'webp'];
@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_vehicule'])) 
         }
     }
     
+    //preparation de la requete pour inserer un nouveau vehicule
     $stmt = $bdd->prepare("INSERT INTO vehicules (nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nom, $marque, $annee, $description, $image_name, $prix, $places]);
     
@@ -30,17 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_vehicule'])) 
     exit;
 }
 
+//création de case pour chaque elements du menu et eviter d'avoir une page pour chaque lien
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
+//fonction d'affichage de chaque page
 function renderPage($page) {
     global $bdd;
     echo "<div class='admin-card'>";
 
     switch ($page) {
+        //affichage dashboard
         case 'home':
             echo "<h2>Accueil</h2><p>Bienvenue dans l'administration.</p>";
             break;
 
+            //affichage des vehicules du catalogue + formulaire d'ajout
         case 'vehicules':
             ?>
             <div class="header-with-button">
@@ -48,9 +53,10 @@ function renderPage($page) {
                 <button class="admin-btn" onclick="toggleForm()">+ Ajouter un vehicule</button>
             </div>
 
-            <!-- Formulaire d'ajout (masqué par défaut) -->
             <div id="form-ajout-vehicule" class="form-container-admin" style="display: none;">
                 <h3>Ajouter un nouveau vehicule</h3>
+
+                <!-- Formulaire pour ajouter un nouveau vehicule -->
                 <form method="POST" enctype="multipart/form-data" class="form-admin">
                     <div class="form-row">
                         <div class="form-group">
@@ -95,7 +101,7 @@ function renderPage($page) {
                 </form>
             </div>
 
-            <!-- Table des véhicules -->
+           <!-- Affichage de toutes les voitures du catalogues sous forme de tableau -->
             <div class="table-wrapper">
                 <?php
                 $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
@@ -121,13 +127,7 @@ function renderPage($page) {
                             <td><?= htmlspecialchars($v['marque']) ?></td>
                             <td><?= $v['annee_vehicule'] ?></td>
                             <td><?= htmlspecialchars($v['description']) ?></td>
-                            <td>
-                                <?php if ($v['image']): ?>
-                                    <img src='../assets/images/<?= htmlspecialchars($v['image']) ?>' alt='Vehicle' style='max-width: 100px;'>
-                                <?php else: ?>
-                                    <span class="no-image">Aucune image</span>
-                                <?php endif; ?>
-                            </td>
+                            <td><img src='../assets/images/<?= htmlspecialchars($v['image']) ?>' alt='Vehicle' style='max-width: 100px;'></td>
                             <td><?= $v['prix_jour'] ?> €</td>
                             <td><?= $v['nb_places'] ?></td>
                         </tr>
@@ -136,6 +136,7 @@ function renderPage($page) {
                 </table>
             </div>
 
+            <!-- script pour afficher ou masquer le formulaire d'ajout de vehicule -->
             <script>
             function toggleForm() {
                 const form = document.getElementById('form-ajout-vehicule');
@@ -145,6 +146,7 @@ function renderPage($page) {
             <?php
             break;
 
+            //affichage des utilisateurs ayant un compte
         case 'users':
             echo "<h2>Utilisateurs</h2>";
 
@@ -169,38 +171,71 @@ function renderPage($page) {
             echo "</tbody></table>";
             break;
 
+            //affichage des reservations par utilisateur ayant un compte ou non
         case 'reservations':
-            echo "<h2>Réservations</h2>";
-            
-            $reservation = $bdd->query("SELECT id, id_vehicule, id_utilisateur, date_debut, date_fin, message, total FROM reservation")->fetchAll(PDO::FETCH_ASSOC);
+        echo "<h2>Réservations</h2>";
+        
+        $reservations = $bdd->query("SELECT * FROM reservation ORDER BY date_debut DESC")->fetchAll(PDO::FETCH_ASSOC);
+        
+        $reservations_rapides = $bdd->query("SELECT * FROM reservation_rapide ORDER BY date_debut DESC")->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<table class='admin-table'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>ID Véhicule</th>
-                            <th>ID Utilisateur</th>
-                            <th>Date Début</th>
-                            <th>Date Fin</th>
-                            <th>Message</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
-            foreach ($reservation as $r) {
-                echo "<tr>
-                        <td>{$r['id']}</td>
-                        <td>{$r['id_vehicule']}</td>
-                        <td>{$r['id_utilisateur']}</td>
-                        <td>{$r['date_debut']}</td>
-                        <td>{$r['date_fin']}</td>
-                        <td>" . htmlspecialchars($r['message']) . "</td>
-                        <td>{$r['total']} €</td>
-                      </tr>";
-            }
-            echo "</tbody></table>";
-            break;
+        echo "<h3>Reservations avec compte</h3>";
+        echo "<table class='admin-table'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Vehicule</th>
+                        <th>ID Utilisateur</th>
+                        <th>Date Debut</th>
+                        <th>Date Fin</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        foreach ($reservations as $r) {
+            echo "<tr>
+                    <td>{$r['id']}</td>
+                    <td>{$r['id_vehicule']}</td>
+                    <td>{$r['id_utilisateur']}</td>
+                    <td>{$r['date_debut']}</td>
+                    <td>{$r['date_fin']}</td>
+                    <td>{$r['total']} €</td>
+                </tr>";
+        }
+        echo "</tbody></table>";
 
+        echo "<br><br>";
+
+        echo "<h3>Reservations rapides</h3>";
+        echo "<table class='admin-table'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>ID Vehicule</th>
+                        <th>Date Debut</th>
+                        <th>Date Fin</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>";
+        foreach ($reservations_rapides as $r) {
+            echo "<tr>
+                    <td>{$r['id']}</td>
+                    <td>{$r['nom']} {$r['prenom']}</td>
+                    <td>{$r['email']}</td>
+                    <td>{$r['id_vehicule']}</td>
+                    <td>{$r['date_debut']}</td>
+                    <td>{$r['date_fin']}</td>
+                    <td>{$r['total']} €</td>
+                </tr>";
+        }
+        echo "</tbody></table>";
+        
+        break;
+
+        //affichage des message du formulaire de contact
         case 'contact':
             echo "<h2>Messages de contact</h2>";
             
@@ -250,10 +285,9 @@ function renderPage($page) {
 <body>
 <div class="admin-container">
 
-    <!-- Sidebar -->
+    <!-- Menu administrateur -->
     <aside class="admin-sidebar">
 
-        <!-- Logo -->
         <div class="admin-logo">
             <img src="../assets/images/logo.png" alt="Logo" class="logo-img">
         </div>
@@ -292,7 +326,7 @@ function renderPage($page) {
             </ul>
         </nav>
 
-        <!-- Bouton Déconnexion -->
+        <!-- bouton de deconnexion -->
         <a href="logout.php" class="admin-logout">
             <img src="../assets/images/se-deconnecter.png" class="icon" alt=""> Deconnexion
         </a>
