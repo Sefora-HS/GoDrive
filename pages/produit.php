@@ -1,14 +1,14 @@
 <?php
-//connection
+//connection a la bdd
 require_once '../pages/config.php';
 
-// Si l'utilisateur n'est pas connecté → redirection
+// redirection si l'utilisateur n'est pas connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
 
-// Vérification que l'utilisateur existe encore dans la BDD
+// verifier si l'utilisateur existe dans la bdd
 $verif = $bdd->prepare("SELECT id FROM utilisateurs WHERE id = :id");
 $verif->execute([':id' => $_SESSION['user_id']]);
 if ($verif->rowCount() == 0) {
@@ -19,20 +19,21 @@ if ($verif->rowCount() == 0) {
 
 $user_id = $_SESSION['user_id'];
 
-// ----------  Récupérer l'ID du produit dans l'URL ---------
+//Recuperation de l'id du vehicule pour afficher les bonnes infos
 if (!isset($_GET['id'])) {
     echo "Aucun produit sélectionné.";
     exit;
 }
 
-$vehicule_id = (int) $_GET['id']; // Sécurisation simple
+//securisation
+$vehicule_id = (int) $_GET['id'];
 
-// récupérer les informations du vehicule 
+// on recupere les informations du vehicule et preparons la requete
 $stmt = $bdd->prepare("SELECT * FROM vehicules WHERE id = ?");
 $stmt->execute([$vehicule_id]);
 $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// ---------- Vérifier si le produit existe ----------
+//on verifie si le vehicule selectionné existe
 if (!$vehicule) {
     echo "Vehicule introuvable.";
     exit;
@@ -40,31 +41,32 @@ if (!$vehicule) {
 
 $nb_places = $vehicule['nb_places'];
 
-// ========== TRAITEMENT DE LA RÉSERVATION ==========
+
+//traite la demande du formulaire champs par champs
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isset($_POST['date_fin'])) {
     try {
         $date_debut = $_POST['date_debut'];
         $date_fin = $_POST['date_fin'];
         $message = trim($_POST['message'] ?? '');
         
-        // Validation des dates
+        // verification des dates
         $dateDebutObj = new DateTime($date_debut);
         $dateFinObj = new DateTime($date_fin);
         $aujourdhui = new DateTime();
         $aujourdhui->setTime(0, 0, 0);
         
-        // Vérifier que les dates sont dans le futur
+        // verifications dates sont apres la date d'aujourd'hui
         if ($dateDebutObj < $aujourdhui) {
             $error = "La date de début doit être aujourd'hui ou dans le futur.";
         } elseif ($dateFinObj <= $dateDebutObj) {
             $error = "La date de fin doit être après la date de début.";
         } else {
-            // Calcul du nombre de jours et du total
+            //calcul du nombre de jour 
             $interval = $dateDebutObj->diff($dateFinObj);
             $nbJours = $interval->days;
             $total = $nbJours * $vehicule['prix_jour'];
             
-            // Insertion de la réservation
+            // ajout de la reservation a la bdd
             $insertReservation = $bdd->prepare("
                 INSERT INTO reservation (id_utilisateur, id_vehicule, date_debut, date_fin, total, message)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -102,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
 
 <body>
     <?php
-    // Inclut le header
+    // Inclure le header
     include('../templates/header.php');
     ?>
     <main class="main">
@@ -128,7 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
                 <img src="../assets/images/<?= htmlspecialchars($vehicule['image']) ?>"
                     alt="<?= htmlspecialchars($vehicule['nom_vehicule']) ?>">
                 
-                <!-- Description voiture -->
                 <div class="description">
                     <h3>Description</h3>
                     <p><?= htmlspecialchars($vehicule['description']) ?></p>
@@ -173,7 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
                         Une fois votre réservation validée, retrouvez votre récapitulatif de commande sur votre compte dans la rubrique <a href="../pages/utilisateur.php">"Mon compte"</a>
                     </p>
 
-                    <!-- Bouton réserver -->
                     <button type="submit" class="pill-btn" aria-label="Réserver">
                         Reserver
                     </button>
@@ -185,12 +185,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
     </main>
 
     <?php
-    // Inclut le footer
+    // Inclure le footer
     include('../templates/footer.php');
     ?>
 
     <script>
-        // Avoir le prix qui s'affiche directement sur la page
+        // script qui permet de calculer le prix de chaque location en fonction du nombre de jour selectionné / aide de l'ia
         const prixJour = <?= $vehicule['prix_jour'] ?>;
 
         const debut = document.querySelector('[name="date_debut"]');
@@ -214,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isse
         debut.addEventListener('change', calculPrix);
         fin.addEventListener('change', calculPrix);
         
-        // Définir la date de fin minimum en fonction de la date de début
+
         debut.addEventListener('change', function() {
             fin.min = debut.value;
         });

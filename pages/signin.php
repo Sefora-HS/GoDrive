@@ -12,7 +12,7 @@ $succes = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // 1. Récupération et sécurisation
+    // récupération et sécurisation des infos
     $nom        = trim($_POST['nom']);
     $prenom     = trim($_POST['prenom']);
     $identifiant= trim($_POST['id']);
@@ -20,27 +20,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password   = $_POST['password'];
     $password2  = $_POST['password-confirm'];
 
-    // 2. Vérification champs vides
+    // verification si champs vide
     if (empty($nom) || empty($prenom) || empty($identifiant) || empty($email) || empty($password) || empty($password2)) {
         $erreur = "Tous les champs sont obligatoires.";
     }
 
-    // 3. Vérification email
+    // verification de l'email
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur = "Adresse email invalide.";
     }
 
-    // 4. Vérification longueur mot de passe
+    // verification du mdp
     elseif (strlen($password) < 6) {
         $erreur = "Le mot de passe doit contenir au moins 6 caractères.";
     }
 
-    // 5. Vérification mots de passe
+    // verification de la confirmation du mdp
     elseif ($password !== $password2) {
         $erreur = "Les mots de passe ne correspondent pas.";
     }
 
-    // 6. Vérifier si identifiant ou email existe déjà
+    // verifier si les id entrées existe deja
     else {
         try {
             $check = $bdd->prepare("SELECT id FROM utilisateurs WHERE identifiant = :identifiant OR email = :email");
@@ -53,10 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $erreur = "Identifiant ou email déjà utilisé.";
             } else {
 
-                // 7. Hash du mot de passe
+                // hashage du mdp
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-                // 8. Insertion
+                // insertion dans la bdd
                 $insert = $bdd->prepare("
                     INSERT INTO utilisateurs 
                     (identifiant, motdepasse, nom, prenom, email, adresse, ville, code_postal, role)
@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $succes = "Inscription réussie ! Redirection vers la page de connexion...";
                 
-                // Redirection automatique après 2 secondes
+                // redirection une fois inscrit vers la page login
                 header("refresh:2;url=login.php");
             }
         } catch (PDOException $e) {

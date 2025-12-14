@@ -1,7 +1,7 @@
 <?php
 require_once '../pages/config.php';
 
-// Traitement du formulaire
+// Envoie du formulaire et verification des champs
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
     try {
         // Récupération et validation des données
@@ -54,15 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'])) {
     }
 }
 
-// Si on vient depuis une page produit alors saisir les données de la page (dates et id véhicule) sinon on laisse ces données vides 
+// si on vient depuis une page produit alors saisir les données de la page (dates et id véhicule) sinon on laisse ces données vides 
 $dateDebut = $_POST['date_debut'] ?? '';
 $dateFin   = $_POST['date_fin'] ?? '';
 $vehiculeId = $_POST['vehicule_id'] ?? '';
 
-// Récupération de la liste des véhicules pour le select
+// récupération de la liste des véhicules pour le select
 $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, prix_jour FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
 
-// Si un véhicule est sélectionné, récupérer ses infos
+// si un véhicule est sélectionné, récupérer ses infos
 $vehiculeSelectionne = null;
 if ($vehiculeId) {
     $stmt = $bdd->prepare("SELECT * FROM vehicules WHERE id = ?");
@@ -84,7 +84,7 @@ if ($vehiculeId) {
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le header
 include('../templates/header.php');
 ?>
 <main>
@@ -212,7 +212,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le footer
+// Inclure le footer
 include('../templates/footer.php');
 ?>
 </body>

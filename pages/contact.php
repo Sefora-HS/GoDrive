@@ -4,10 +4,10 @@ require_once '../pages/config.php';
 $erreurs = [];
 $success = "";
 
-// Récupérer et stocker données  
+// Récupérer et stocker les données  
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    // 1 - Nom 
+    // On recupere le nom et effectuons les tests de securité necessaire
     if (!empty($_POST["nom"])) {
         $nom = trim($_POST['nom']);
         $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nom = "";
     }
 
-    // 2 - Email
+    // On recupere l'email et effectuons les tests de securité necessaire
     if (!empty($_POST["email"])) {
         $email = trim($_POST['email']);
         
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = ''; 
     }
 
-    // 3 - Message 
+    // // On recupere le mesage et effectuons les tests de securité necessaire
     if (!empty($_POST["message"])) {
         $message = trim($_POST['message']);
         $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
@@ -50,30 +50,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = ''; 
     }
 
-    // Si pas d'erreurs, traiter le formulaire
+    // Si aucune erreur on envoie le formulaire
     if (empty($erreurs)) {
         try {
             // Insertion dans la base de données
             $stmt = $bdd->prepare("INSERT INTO contact (nom, email, message) VALUES (?, ?, ?)");
             $stmt->execute([$nom, $email, $message]);
             
-            // Envoi du mail (optionnel)
-            $destinataire = "contact@godrive.com"; // Remplacer par le vrai email
-            $sujet = "Nouveau message de contact de $nom";
-            $corps = "Nom: $nom\n";
-            $corps .= "Email: $email\n\n";
-            $corps .= "Message:\n$message\n";
-            
-            $headers = "From: $email\r\n";
-            $headers .= "Reply-To: $email\r\n";
-            $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-            
-            // Décommenter pour activer l'envoi de mail
-            // mail($destinataire, $sujet, $corps, $headers);
-            
             $success = "Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.";
             
-            // Réinitialiser les variables
+            // Réinitialiser les variables apres avoir envoyé la requete
             $nom = $email = $message = "";
             
         } catch (PDOException $e) {
@@ -96,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le template header
 include('../templates/header.php');
 ?>
 <main>
@@ -107,6 +93,7 @@ include('../templates/header.php');
     <section class="form-contact-section">
         <h2>Formulaire de contact</h2>
 
+        <!-- Affichage des erreurs -->
         <?php if (!empty($erreurs)): ?>
             <div class="error-messages">
                 <?php foreach ($erreurs as $erreur): ?>
@@ -119,6 +106,7 @@ include('../templates/header.php');
             <p class="success"><?= htmlspecialchars($success) ?></p>
         <?php endif; ?>
 
+        <!-- Formulaire contact -->
         <form action="" method="post" class="contact-form">
             <div class="contact-nom">
                 <input type="text" name="nom" placeholder="Nom/Prénom" value="<?= isset($nom) ? htmlspecialchars($nom) : '' ?>" required>

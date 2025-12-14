@@ -63,7 +63,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le header
+// Inclut le footer
 include('../templates/footer.php');
 ?>
 </body>

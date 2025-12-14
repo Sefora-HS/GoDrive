@@ -54,7 +54,7 @@ $mesReservations = $reservations->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le header
 include('../templates/header.php');
 ?>
 <main>
@@ -104,7 +104,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le footer
+// Inclure le footer
 include('../templates/footer.php');
 ?>
 </body>

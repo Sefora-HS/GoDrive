@@ -1,20 +1,19 @@
 <?php
 
-require_once 'config.php'; // connexion PDO
+require_once 'config.php';
 
 // Chemin vers le fichier SQL
 $sqlFile = 'sql/concessionnaire.sql';
 
-// Vérifie que le fichier existe
+// On verifie que le fichier existe
 if (!file_exists($sqlFile)) {
     die("Fichier SQL introuvable : $sqlFile");
 }
 
-// Lit le contenu du fichier SQL
+// on lit le contenu du fichier sql
 $sql = file_get_contents($sqlFile);
 
 try {
-    // Exécute toutes les commandes SQL du fichier
     $bdd->exec($sql);
     echo "Base importée avec succès !";
 } catch (PDOException $e) {

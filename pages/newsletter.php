@@ -6,13 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $email = trim($_POST['email']);
 
-    // Vérification email
+    // verification de sécurité email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("Location: ../index.php?newsletter=invalid");
         exit;
     }
 
-    // Vérifier si email déjà inscrit
+    // verification si l'email deja inscrit dans la base de donnée
     $check = $bdd->prepare("SELECT id FROM newsletter WHERE email = :email");
     $check->execute([':email' => $email]);
 

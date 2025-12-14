@@ -75,7 +75,7 @@ require_once '../pages/config.php';
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le template header
 include('../templates/header.php');
 ?>
 
@@ -121,6 +121,7 @@ include('../templates/header.php');
 
     <section class="grille-catalogue">
 
+        <!-- Pour chaque vehicule affichage des elements recuperer plus -->
         <?php foreach ($vehicules as $v): ?>
 
             <?php  

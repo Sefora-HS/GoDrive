@@ -17,36 +17,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            // Vérifier si le mot de passe est hashé ou en texte brut
+            // On verifie si le  mot de passe est hashé
             $passwordMatch = false;
             
             if (password_verify($password, $user['motdepasse'])) {
-                // Mot de passe hashé avec password_hash()
                 $passwordMatch = true;
             } elseif ($password === $user['motdepasse']) {
-                // Mot de passe en texte brut (à éviter en production!)
                 $passwordMatch = true;
                 
-                // Optionnel : Hasher le mot de passe maintenant
+                // Hashage du mot de passe
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 $updateStmt = $bdd->prepare("UPDATE utilisateurs SET motdepasse = :pwd WHERE id = :id");
                 $updateStmt->execute([':pwd' => $hashedPassword, ':id' => $user['id']]);
             }
             
             if ($passwordMatch) {
-                // Connexion réussie
+                // Etablir la connexion
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['nom'] = $user['nom'];
                 $_SESSION['prenom'] = $user['prenom'];
 
-                // Gestion "Se souvenir de moi"
-                if (isset($_POST['remember'])) {
-                    // Cookie valable 30 jours
-                    setcookie('remember_user', $user['id'], time() + (30 * 24 * 60 * 60), '/', '', false, true);
-                }
-
-                // Redirection selon le rôle
+                // Redirection vers index ou admin en fonction du role
                 if ($user['role'] === 'admin') {
                     header("Location: admin.php");
                 } else {
@@ -78,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le header
 include('../templates/header.php');
 ?>
 <main>
@@ -112,7 +104,7 @@ include('../templates/header.php');
     </section>
 </main>
 <?php
-// Inclut le footer
+// Inclure le footer
 include('../templates/footer.php');
 ?>
 </body>

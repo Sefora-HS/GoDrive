@@ -15,14 +15,14 @@ require_once './pages/config.php';
 </head>
 <body>
 <?php
-// Inclut le header
+// Inclure le template header
 include('templates/header.php');
 ?>
 <main>
      <section class="section-index">
-        <!--  -->
+        
         <div class="hero-top">
-            <!--  -->
+            
             <div class="hero-left">
                 <h1 class="hero-title">Vous avez besoin d'une voiture ?</h1>
                 <h2 class="hero-subtitle">Reservez des maintenant votre voiture et profitez de la route</h2>
@@ -32,7 +32,7 @@ include('templates/header.php');
                     <a href="./pages/faq.php" class="clair">En savoir plus</a>
                 </div>
             </div>
-            <!--  -->
+            
             <div class="hero-right">
                 <img src="./assets/images/car-3d.png" alt="img voiture">
             </div>
@@ -55,7 +55,7 @@ include('templates/header.php');
      </section>
 </main>
 <?php
-// Inclut le header
+// Inclure le template footer
 include('templates/footer.php');
 ?>
 </body>
