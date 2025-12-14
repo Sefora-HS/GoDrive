@@ -95,18 +95,18 @@ include('../templates/header.php');
                 <option value="BMW">BMW</option>
                 <option value="Mercedes">Mercedes</option>
                 <option value="Nissan">Nissan</option>
-                <option value="Nissan">Smart</option>
-                <option value="Nissan">Audi</option>
-                <option value="Nissan">Dodge</option>
-                <option value="Nissan">Lamborghini</option>
-                <option value="Nissan">VW</option>
-                <option value="Nissan">Toyota</option>
-                <option value="Nissan">Tesla</option>
-                <option value="Nissan">Range Rover</option>
-                <option value="Nissan">Citroen</option>
-                <option value="Nissan">Fiat</option>
-                <option value="Nissan">Suzuki</option>
-                <option value="Nissan">Mini</option>
+                <option value="Smart">Smart</option>
+                <option value="Audi">Audi</option>
+                <option value="Dodge">Dodge</option>
+                <option value="Lamborghini">Lamborghini</option>
+                <option value="VW">VW</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Range Rover">Range Rover</option>
+                <option value="Citroen">Citroen</option>
+                <option value="Fiat">Fiat</option>
+                <option value="Suzuki">Suzuki</option>
+                <option value="Mini">Mini</option>
             </select>
 
             <input type="number" name="annee" class="annee" placeholder="Annee min" value="<?php echo $_GET['annee'] ?? ''; ?>">
