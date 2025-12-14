@@ -9,13 +9,22 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
     if (!empty($_POST["nom"])){
           $nom = trim($_POST['nom']);
         $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+      if ($nom === '') {
+    $erreurs[] = "Le nom est obligatoire";
+}
+if (strlen($nom) > 100) {
+    $erreurs[] = "Le nom est trop long";
+}
+if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+    $erreurs[] = "Le nom contient des caractères invalides";
+}
 
           if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
             $erreurs[] = "Le nom contient des caractères invalides.";
         } 
     } else {
          $erreurs[] = "Attention le nom n'est pas valide. <br> Veuillez saisir votre nom. <br>";
-        $nom=""
+        $nom="";
             }
 // 2-Email
       if (!empty($_POST["email"])){
@@ -29,6 +38,16 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
           $email=''; 
       }
 
+  if (!empty($erreurs)) {
+        foreach ($erreurs as $erreur) {
+            echo "<p style='color:red;'>$erreur</p>";
+        }
+    } else {
+        echo "<p style='color:green;'>Formulaire valide !</p>";
+        // Ici tu peux insérer en base ou envoyer le mail
+    }
+}
+
     
     // 3- Message 
     if (!empty($_POST["message"])){
@@ -39,41 +58,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
         $message =''; 
     }
         
-
-    if (!empty($erreurs)){
-        foreach ($erreurs as erreur){
-            echo "<p> $erreur</p>;
-            }
-            
-    
+             
         
         
 
- 
-    $email = trim($_POST['email']);
-    $message = trim($_POST['message']);
-    
-// securisations éléments 
-// 1-Nom 
-
-
-if ($nom === '') {
-    $erreurs[] = "Le nom est obligatoire";
-}
-if (strlen($nom) > 100) {
-    $erreurs[] = "Le nom est trop long";
-}
-if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
-    $erreurs[] = "Le nom contient des caractères invalides";
-}
-
-// 2-email 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL){
-    echo "Attention, adresse email invalide"; 
-$email="";
-
-    
-    } else 
 
 //envoyer par mail à l'entreprise le contenu du message envoyer par la page
  // le message laissé dans la page est envoyé au mail pro de l'entreprise
