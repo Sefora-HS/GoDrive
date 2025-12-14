@@ -89,7 +89,7 @@ include('../templates/header.php');
 ?>
 <main>
     <section class="title-section">
-        <h1>Formulaire Réservation rapide</h1>
+        <h1>Formulaire Reservation rapide</h1>
     </section>
 
     <?php if (isset($success)): ?>
@@ -184,7 +184,7 @@ include('../templates/header.php');
                         required>
                 </div>
 
-                <button type="submit">Réserver ➡</button>
+                <button type="submit">Reserver ➡</button>
             </div>
 
         </form>
@@ -202,11 +202,11 @@ include('../templates/header.php');
             </div>
             <div class="chiffres-reservation-item">
                 <p class="chiffre">800</p>
-                <p class="chiffre-desc">+800 modèles disponibles à la location</p>
+                <p class="chiffre-desc">+800 modeles disponibles a la location</p>
             </div>
             <div class="chiffres-reservation-item">
                 <p class="chiffre">600</p>
-                <p class="chiffre-desc">En moyenne 600 voitures louées chaque jour</p>
+                <p class="chiffre-desc">En moyenne 600 voitures louees chaque jour</p>
             </div>
         </div>
     </section>
