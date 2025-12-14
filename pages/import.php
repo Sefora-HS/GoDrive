@@ -15,7 +15,7 @@ $sql = file_get_contents($sqlFile);
 
 try {
     // Exécute toutes les commandes SQL du fichier
-    $pdo->exec($sql);
+    $bdd->exec($sql);
     echo "Base importée avec succès !";
 } catch (PDOException $e) {
     die("Erreur à l'import : " . $e->getMessage());

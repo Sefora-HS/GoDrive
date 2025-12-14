@@ -20,7 +20,7 @@ function renderPage($page) {
         case 'vehicules':
             echo "<h2>Gestionnaires véhicules</h2>";
 
-            $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places  FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
+            $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
 
             echo "<table border='1' class='admin-table'>
                     <thead>
@@ -37,17 +37,17 @@ function renderPage($page) {
                     </thead>
                     <tbody>";
             foreach ($vehicules as $v) {
-    echo "<tr>
-            <td>{$v['id']}</td>
-            <td>{$v['nom_vehicule']}</td>
-            <td>{$v['marque']}</td>
-            <td><img src="../assets/images/" . "htmlspecialchars($v['image'])"></td>
-            <td>{$v['description']}</td>
-            <td>{$v['image']}</td>
-            <td>{$v['prix_jour']}</td>
-            <td>{$v['nb_places']}</td>
-          </tr>";
-}
+                echo "<tr>
+                        <td>{$v['id']}</td>
+                        <td>" . htmlspecialchars($v['nom_vehicule']) . "</td>
+                        <td>" . htmlspecialchars($v['marque']) . "</td>
+                        <td>{$v['annee_vehicule']}</td>
+                        <td>" . htmlspecialchars($v['description']) . "</td>
+                        <td><img src='../assets/images/" . htmlspecialchars($v['image']) . "' alt='Vehicle' style='max-width: 100px;'></td>
+                        <td>{$v['prix_jour']} €</td>
+                        <td>{$v['nb_places']}</td>
+                      </tr>";
+            }
 
             echo "</tbody></table>";
             break;
@@ -57,7 +57,6 @@ function renderPage($page) {
 
             $users = $bdd->query("SELECT id, nom, email FROM utilisateurs")->fetchAll(PDO::FETCH_ASSOC);
 
-            // Tableau HTML
             echo "<table border='1' class='admin-table'>
                     <thead>
                         <tr>
@@ -70,8 +69,8 @@ function renderPage($page) {
             foreach ($users as $u) {
                 echo "<tr>
                         <td>{$u['id']}</td>
-                        <td>{$u['nom']}</td>
-                        <td>{$u['email']}</td>
+                        <td>" . htmlspecialchars($u['nom']) . "</td>
+                        <td>" . htmlspecialchars($u['email']) . "</td>
                       </tr>";
             }
             echo "</tbody></table>";
@@ -80,25 +79,30 @@ function renderPage($page) {
         case 'reservations':
             echo "<h2>Réservations</h2>";
             
-            // Exemple : récupérer les réservations
-            $reservation = $bdd->query("SELECT id, id_vehicule,id_utilisateur, date_debut, date_fin, message, total FROM reservation")->fetchAll(PDO::FETCH_ASSOC);
+            $reservation = $bdd->query("SELECT id, id_vehicule, id_utilisateur, date_debut, date_fin, message, total FROM reservation")->fetchAll(PDO::FETCH_ASSOC);
 
             echo "<table border='1' class='admin-table'>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Voiture</th>
-                            <th>Date</th>
-                            <th>Utilisateur ID</th>
+                            <th>ID Véhicule</th>
+                            <th>ID Utilisateur</th>
+                            <th>Date Début</th>
+                            <th>Date Fin</th>
+                            <th>Message</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>";
             foreach ($reservation as $r) {
                 echo "<tr>
                         <td>{$r['id']}</td>
-                        <td>{$r['voiture']}</td>
-                        <td>{$r['date_reservation']}</td>
-                        <td>{$r['utilisateur_id']}</td>
+                        <td>{$r['id_vehicule']}</td>
+                        <td>{$r['id_utilisateur']}</td>
+                        <td>{$r['date_debut']}</td>
+                        <td>{$r['date_fin']}</td>
+                        <td>" . htmlspecialchars($r['message']) . "</td>
+                        <td>{$r['total']} €</td>
                       </tr>";
             }
             echo "</tbody></table>";
@@ -122,9 +126,9 @@ function renderPage($page) {
             foreach ($messages as $m) {
                 echo "<tr>
                         <td>{$m['id']}</td>
-                        <td>{$m['nom']}</td>
-                        <td>{$m['email']}</td>
-                        <td>{$m['message']}</td>
+                        <td>" . htmlspecialchars($m['nom']) . "</td>
+                        <td>" . htmlspecialchars($m['email']) . "</td>
+                        <td>" . htmlspecialchars($m['message']) . "</td>
                       </tr>";
             }
             echo "</tbody></table>";
@@ -145,7 +149,7 @@ function renderPage($page) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoDrive</title>
+    <title>GoDrive - Admin</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">

@@ -1,83 +1,90 @@
 <?php
 require_once '../pages/config.php';
 
-// récupérer et stocker données  
-if ($_SERVER['REQUEST_METHOD']==='POST'){
-  $erreurs = [];
+$erreurs = [];
+$success = "";
+
+// Récupérer et stocker données  
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    // 1-Nom 
-    if (!empty($_POST["nom"])){
-          $nom = trim($_POST['nom']);
+    // 1 - Nom 
+    if (!empty($_POST["nom"])) {
+        $nom = trim($_POST['nom']);
         $nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
-      if ($nom === '') {
-    $erreurs[] = "Le nom est obligatoire";
-}
-if (strlen($nom) > 100) {
-    $erreurs[] = "Le nom est trop long";
-}
-if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
-    $erreurs[] = "Le nom contient des caractères invalides";
-}
-
-          if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
-            $erreurs[] = "Le nom contient des caractères invalides.";
-        } 
-    } else {
-         $erreurs[] = "Attention le nom n'est pas valide. <br> Veuillez saisir votre nom. <br>";
-        $nom="";
-            }
-// 2-Email
-      if (!empty($_POST["email"])){
-          $email = trim($_POST['email']);
-           if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $email='';
-     $erreurs[]= "Attention le mail n'est pas valide.<br> Veuillez saisir votre adressse électronique.";
-           }
-      } else {
-          erreurs[]= "Attention le mail n'est pas valide. <br> Veuillez saisir votre adresse éléctronique. <br> ";
-          $email=''; 
-      }
-
-  if (!empty($erreurs)) {
-        foreach ($erreurs as $erreur) {
-            echo "<p style='color:red;'>$erreur</p>";
+        
+        if ($nom === '') {
+            $erreurs[] = "Le nom est obligatoire";
+        } elseif (strlen($nom) > 100) {
+            $erreurs[] = "Le nom est trop long";
+        } elseif (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
+            $erreurs[] = "Le nom contient des caractères invalides";
         }
     } else {
-        echo "<p style='color:green;'>Formulaire valide !</p>";
-        // Ici tu peux insérer en base ou envoyer le mail
+        $erreurs[] = "Attention le nom n'est pas valide. Veuillez saisir votre nom.";
+        $nom = "";
     }
-}
 
-    
-    // 3- Message 
-    if (!empty($_POST["message"])){
+    // 2 - Email
+    if (!empty($_POST["email"])) {
+        $email = trim($_POST['email']);
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $email = '';
+            $erreurs[] = "Attention le mail n'est pas valide. Veuillez saisir votre adresse électronique.";
+        }
+    } else {
+        $erreurs[] = "Attention le mail n'est pas valide. Veuillez saisir votre adresse électronique.";
+        $email = ''; 
+    }
+
+    // 3 - Message 
+    if (!empty($_POST["message"])) {
         $message = trim($_POST['message']);
         $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
-    } else{
-        $erreurs[]= "Veuillez saisir votre message. <br>" ;
-        $message =''; 
+        
+        if ($message === '') {
+            $erreurs[] = "Veuillez saisir votre message.";
+        }
+    } else {
+        $erreurs[] = "Veuillez saisir votre message.";
+        $message = ''; 
     }
-        
-             
-        
-        
 
-
-//envoyer par mail à l'entreprise le contenu du message envoyer par la page
- // le message laissé dans la page est envoyé au mail pro de l'entreprise
-    if ( $nom && filter_var(*email, FILTER_VALIDATE_EMAIL) && $message) {
-        
-        mail(
-            "aya.treyaoui@etu.unilim.fr" , // contact d'un membre de l'équipe pour tester et exploiter les fonctionnalités mais le véritable mail doit être le pro de l'entreprise
-            " Message laissé par $nom ($email), 
-            "Message laissé: <br> $message ", 
-            ); 
+    // Si pas d'erreurs, traiter le formulaire
+    if (empty($erreurs)) {
+        try {
+            // Insertion dans la base de données
+            $stmt = $bdd->prepare("INSERT INTO contact (nom, email, message) VALUES (?, ?, ?)");
+            $stmt->execute([$nom, $email, $message]);
+            
+            // Envoi du mail (optionnel)
+            $destinataire = "contact@godrive.com"; // Remplacer par le vrai email
+            $sujet = "Nouveau message de contact de $nom";
+            $corps = "Nom: $nom\n";
+            $corps .= "Email: $email\n\n";
+            $corps .= "Message:\n$message\n";
+            
+            $headers = "From: $email\r\n";
+            $headers .= "Reply-To: $email\r\n";
+            $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+            
+            // Décommenter pour activer l'envoi de mail
+            // mail($destinataire, $sujet, $corps, $headers);
+            
+            $success = "Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.";
+            
+            // Réinitialiser les variables
+            $nom = $email = $message = "";
+            
+        } catch (PDOException $e) {
+            $erreurs[] = "Erreur lors de l'enregistrement : " . $e->getMessage();
+        }
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,7 +92,7 @@ if (!preg_match("/^[a-zA-ZÀ-ÿ\s'-]+$/u", $nom)) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>GoDrive</title>
+    <title>GoDrive - Contact</title>
 </head>
 <body>
 <?php
@@ -96,20 +103,32 @@ include('../templates/header.php');
     <section class="contact-title">
         <h1>Contact</h1>
     </section>
+    
     <section class="form-contact-section">
+        <h2>Formulaire de contact</h2>
 
-    <h2>Formulaire de contact</h2>
+        <?php if (!empty($erreurs)): ?>
+            <div class="error-messages">
+                <?php foreach ($erreurs as $erreur): ?>
+                    <p class="error"><?= htmlspecialchars($erreur) ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
-    <form action="" method="post" class="contact-form">
-        <div class="contact-nom">
-            <input type="text" name="nom" placeholder="Nom/Prenom :" required>
-            <input type="email" name="email" placeholder="Adresse mail :" required>
-        </div>
-        
-        <input type="text" name="message" placeholder="Message :" class="input-msg" required>
+        <?php if (!empty($success)): ?>
+            <p class="success"><?= htmlspecialchars($success) ?></p>
+        <?php endif; ?>
 
-        <button type="submit">Nous contacter</button>
-    </form>
+        <form action="" method="post" class="contact-form">
+            <div class="contact-nom">
+                <input type="text" name="nom" placeholder="Nom/Prénom" value="<?= isset($nom) ? htmlspecialchars($nom) : '' ?>" required>
+                <input type="email" name="email" placeholder="Adresse mail" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>" required>
+            </div>
+            
+            <textarea name="message" placeholder="Votre message..." class="input-msg" rows="6" required><?= isset($message) ? htmlspecialchars($message) : '' ?></textarea>
+
+            <button type="submit">Nous contacter</button>
+        </form>
     </section>
 </main>
 <?php

@@ -930,3 +930,218 @@ summary {
 .container-prod {
   display: flex; 
 }
+
+/* Informations du véhicule sélectionné dans le formulaire de réservation */
+.left-reservation {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 48%;
+    padding: 2rem;
+    gap: 1rem;
+    background: var(--white);
+    border-radius: 0 1rem 1rem 0;
+}
+
+.left-reservation label {
+    font-weight: 600;
+    color: var(--bleu-fonce);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.left-reservation .row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.left-reservation select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #1e456d;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--white);
+    cursor: pointer;
+}
+
+.left-reservation select:focus {
+    border-color: var(--bleu-fonce);
+    box-shadow: 0 0 10px rgba(0, 100, 255, 0.3);
+}
+
+/* Card du véhicule sélectionné - Style comme l'image */
+.vehicule-info {
+    background: var(--white);
+    border: 2px solid #d0d0d0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.vehicule-info img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+    flex-shrink: 0;
+}
+
+.vehicule-details {
+    flex: 1;
+}
+
+.vehicule-info h3 {
+    font-family: 'Koulen';
+    font-size: 1.2rem;
+    color: var(--bleu-fonce);
+    margin: 0 0 0.3rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vehicule-info p {
+    font-size: 0.85rem;
+    color: var(--grey);
+    margin: 0.2rem 0;
+    line-height: 1.4;
+}
+
+.vehicule-info p strong {
+    color: var(--bleu-fonce);
+    font-weight: 600;
+}
+
+.vehicule-info .prix-badge {
+    background: var(--bleu-fonce);
+    color: var(--white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 0.3rem;
+}
+
+/* Date et sélecteurs */
+.date-wrapper,
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.date-wrapper input[type="date"],
+.select-wrapper select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #1e456d;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    background-color: var(--white);
+    font-family: 'Poppins';
+    color: var(--grey);
+}
+
+.date-wrapper input[type="date"]:focus,
+.select-wrapper select:focus {
+    border-color: var(--bleu-fonce);
+    box-shadow: 0 0 8px rgba(0, 100, 255, 0.2);
+}
+
+/* Section total */
+.total-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    padding: 1rem 0;
+    border-top: 2px solid #e0e0e0;
+}
+
+.total-section .total-label {
+    font-family: 'Koulen';
+    font-size: 1.8rem;
+    color: var(--bleu-fonce);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.total-section .total-prix {
+    font-family: 'Koulen';
+    font-size: 2rem;
+    color: var(--bleu-fonce);
+}
+
+/* Bouton de réservation - Style comme l'image */
+.left-reservation button {
+    background-color: var(--bleu-fonce);
+    color: var(--white);
+    border-radius: 3rem;
+    border: none;
+    font-family: 'Koulen';
+    font-size: 1.3rem;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.left-reservation button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(4, 72, 115, 0.4);
+}
+
+.left-reservation button:active {
+    transform: translateY(0);
+}
+
+.left-reservation button::after {
+    content: "➜";
+    font-size: 1.5rem;
+}
+
+/* Messages d'alerte */
+.alert {
+    padding: 1.2rem 2rem;
+    margin: -3rem auto 2rem auto;
+    border-radius: 0.8rem;
+    max-width: 65vw;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    position: relative;
+    z-index: 10;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+}
+
+/* Grille pour dates et sélecteurs - 2 colonnes */
+.reservation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}

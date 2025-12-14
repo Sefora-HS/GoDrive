@@ -17,6 +17,8 @@ if ($verif->rowCount() == 0) {
     exit;
 }
 
+$user_id = $_SESSION['user_id'];
+
 // ----------  Récupérer l'ID du produit dans l'URL ---------
 if (!isset($_GET['id'])) {
     echo "Aucun produit sélectionné.";
@@ -25,27 +27,68 @@ if (!isset($_GET['id'])) {
 
 $vehicule_id = (int) $_GET['id']; // Sécurisation simple
 
-
-
-// récupérer les informtions du vehicule 
+// récupérer les informations du vehicule 
 $stmt = $bdd->prepare("SELECT * FROM vehicules WHERE id = ?");
 $stmt->execute([$vehicule_id]);
 $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
-$nb_places = $vehicule['nb_places'];
 
-
-
-// ---------- 4. Vérifier si le produit existe ----------
+// ---------- Vérifier si le produit existe ----------
 if (!$vehicule) {
     echo "Vehicule introuvable.";
     exit;
 }
+
+$nb_places = $vehicule['nb_places'];
+
+// ========== TRAITEMENT DE LA RÉSERVATION ==========
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['date_debut']) && isset($_POST['date_fin'])) {
+    try {
+        $date_debut = $_POST['date_debut'];
+        $date_fin = $_POST['date_fin'];
+        $message = trim($_POST['message'] ?? '');
+        
+        // Validation des dates
+        $dateDebutObj = new DateTime($date_debut);
+        $dateFinObj = new DateTime($date_fin);
+        $aujourdhui = new DateTime();
+        $aujourdhui->setTime(0, 0, 0);
+        
+        // Vérifier que les dates sont dans le futur
+        if ($dateDebutObj < $aujourdhui) {
+            $error = "La date de début doit être aujourd'hui ou dans le futur.";
+        } elseif ($dateFinObj <= $dateDebutObj) {
+            $error = "La date de fin doit être après la date de début.";
+        } else {
+            // Calcul du nombre de jours et du total
+            $interval = $dateDebutObj->diff($dateFinObj);
+            $nbJours = $interval->days;
+            $total = $nbJours * $vehicule['prix_jour'];
+            
+            // Insertion de la réservation
+            $insertReservation = $bdd->prepare("
+                INSERT INTO reservation (id_utilisateur, id_vehicule, date_debut, date_fin, total, message)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ");
+            
+            $insertReservation->execute([
+                $user_id,
+                $vehicule_id,
+                $date_debut,
+                $date_fin,
+                $total,
+                $message
+            ]);
+            
+            $success = "Votre réservation a été enregistrée avec succès ! Vous pouvez la consulter dans votre compte.";
+        }
+    } catch (PDOException $e) {
+        $error = "Erreur lors de la réservation : " . $e->getMessage();
+    }
+}
 ?>
 
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -64,101 +107,119 @@ if (!$vehicule) {
     ?>
     <main>
 
-
         <h1 class="h1-produit">
-            <?= htmlspecialchars($vehicules['nom_vehicule']) ?>
+            <?= htmlspecialchars($vehicule['nom_vehicule']) ?>
         </h1>
-<div class="container-prod">
-    <div class="colonne-prod">
 
-        <img src="images/<?= htmlspecialchars($vehicules['image']) ?>"
-            alt="<?= htmlspecialchars($vehicules['nom_vehicule']) ?>">
-    </div>
-     <div class="colonne-prod">
-        
-        <div class="nom_vehicule_prod"> <?= htmlspecialchars($vehicules['nom_vehicule']) ?> </div>
-<div class="container-prod">
-       <div class="colonne-prod">
+        <?php if (isset($success)): ?>
+            <div class="alert alert-success">
+                <?= htmlspecialchars($success) ?>
+            </div>
+        <?php endif; ?>
 
+        <?php if (isset($error)): ?>
+            <div class="alert alert-error">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
 
-           
-           <form action="reservation.php" method="POST">
-               <input type="hidden" name="vehicule_id" value="<?= $vehicules['id'] ?>">
+        <div class="container-prod">
+            <div class="colonne-prod">
+                <img src="../assets/images/<?= htmlspecialchars($vehicule['image']) ?>"
+                    alt="<?= htmlspecialchars($vehicule['nom_vehicule']) ?>">
+                
+                <!-- Description voiture -->
+                <div class="description">
+                    <h3>Description</h3>
+                    <p><?= htmlspecialchars($vehicule['description']) ?></p>
+                    <p><strong>Nombre de places :</strong> <?= $nb_places ?></p>
+                    <p><strong>Année :</strong> <?= htmlspecialchars($vehicule['annee_vehicule']) ?></p>
+                    <p><strong>Marque :</strong> <?= htmlspecialchars($vehicule['marque']) ?></p>
+                    <p><strong>Prix par jour :</strong> <?= htmlspecialchars($vehicule['prix_jour']) ?> €</p>
+                </div>
+            </div>
 
-               
-               <label> // Date de début location 
-        <div class="date-wrapper">
-        Date début
-            <input type="date" id="dateDebut" name="dateDebut">
+            <div class="colonne-prod">
+                <div class="nom_vehicule_prod"> 
+                    <?= htmlspecialchars($vehicule['marque'] . ' ' . $vehicule['nom_vehicule']) ?> 
+                </div>
+
+                <form action="" method="POST" class="form-reservation-produit">
+                    <input type="hidden" name="vehicule_id" value="<?= $vehicule['id'] ?>">
+
+                    <div class="reservation-grid">
+                        <div class="date-wrapper">
+                            <label for="dateDebut">Date de début</label>
+                            <input type="date" id="dateDebut" name="date_debut" min="<?= date('Y-m-d') ?>" required>
+                        </div>
+
+                        <div class="date-wrapper">
+                            <label for="dateFin">Date de fin</label>
+                            <input type="date" id="dateFin" name="date_fin" min="<?= date('Y-m-d') ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="message-wrapper">
+                        <label for="message">Message (facultatif)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Informations complémentaires..."></textarea>
+                    </div>
+
+                    <div class="total-section">
+                        <span class="total-label">Total :</span>
+                        <span class="total-prix"><span id="prix">—</span> €</span>
+                    </div>
+
+                    <p class="information">
+                        Une fois votre réservation validée, retrouvez votre récapitulatif de commande sur votre compte dans la rubrique <a href="./moncompte.php">"Mon compte"</a>
+                    </p>
+
+                    <!-- Bouton réserver -->
+                    <button type="submit" class="pill-btn" aria-label="Réserver">
+                        Réserver
+                    </button>
+
+                </form>
+            </div>
         </div>
-                   </label>
-       </div>
-               <label> //Date fin location 
-       <div class="colonne-prod">
-        <div class="date-wrapper">
-            <Date fin
-            <input type="date" id="dateFin" name="dateFin">
-        </div>
-       </label>
-       </div>
-
-// description voiture 
-        <p class="description">
-         Prix total : <span id="prix">—</span> €
-        </p>
-
-    // prix voiture 
-        <p class="prix">
-            Total : <?= htmlspecialchars($vehicules['prix_jour']) ?> €
-        </p>
-         
-     </div>
-</div>
-        <p class="information">
-            Une fois votre réservation validée, retrouvez votre récapitulatif de commande su votre compte dans la rubrique <a href="./mesreservations">"Mes réservations"</a>
-        </p>
-
-
-    //bouton réserver
-        <button type="submit" class="pill-btn" aria-label="Réserver">
-            Réserver
-        </button>
-                   
-</form>
-
-
 
     </main>
+
     <?php
-    // Inclut le header
+    // Inclut le footer
     include('../templates/footer.php');
     ?>
 
-                <script> // avoir le prix qui s'affiche direct sure la page
-                    
-const prixJour = <?= $vehicule['prix_jour'] ?>;
+    <script>
+        // Avoir le prix qui s'affiche directement sur la page
+        const prixJour = <?= $vehicule['prix_jour'] ?>;
 
-const debut = document.querySelector('[name="date_debut"]');
-const fin   = document.querySelector('[name="date_fin"]');
-const prix  = document.getElementById('prix');
+        const debut = document.querySelector('[name="date_debut"]');
+        const fin   = document.querySelector('[name="date_fin"]');
+        const prix  = document.getElementById('prix');
 
-function calculPrix() {
-  if (debut.value && fin.value) {
-    const d1 = new Date(debut.value);
-    const d2 = new Date(fin.value);
-    const jours = (d2 - d1) / (1000 * 60 * 60 * 24);
+        function calculPrix() {
+            if (debut.value && fin.value) {
+                const d1 = new Date(debut.value);
+                const d2 = new Date(fin.value);
+                const jours = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
 
-    if (jours > 0) {
-      prix.textContent = jours * prixJour;
-    }
-  }
-}
+                if (jours > 0) {
+                    prix.textContent = (jours * prixJour).toFixed(2);
+                } else {
+                    prix.textContent = "—";
+                }
+            }
+        }
 
-debut.addEventListener('change', calculPrix);
-fin.addEventListener('change', calculPrix);
-</script>
+        debut.addEventListener('change', calculPrix);
+        fin.addEventListener('change', calculPrix);
+        
+        // Définir la date de fin minimum en fonction de la date de début
+        debut.addEventListener('change', function() {
+            fin.min = debut.value;
+        });
+    </script>
 
 </body>
-
 
 </html>
