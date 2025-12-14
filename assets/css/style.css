@@ -1092,13 +1092,14 @@ textarea.input-admin {
 
 .grille-catalogue {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     gap: 1.5rem;
     width: 100%;
 }
 
 .carte-vehicule {
-    flex: 0 0 20%;
+    flex: 0 0 23%;
     background: var(--white);
     padding: 1rem;
     border-radius: 1rem;
