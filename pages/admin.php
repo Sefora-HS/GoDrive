@@ -1,13 +1,37 @@
 <?php
 require_once '../pages/config.php';
-?>
 
-<?php
+// Traitement du formulaire d'ajout AVANT tout affichage
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter_vehicule'])) {
+    $nom = htmlspecialchars($_POST['nom_vehicule']);
+    $marque = htmlspecialchars($_POST['marque']);
+    $annee = intval($_POST['annee_vehicule']);
+    $description = htmlspecialchars($_POST['description']);
+    $prix = floatval($_POST['prix_jour']);
+    $places = intval($_POST['nb_places']);
+    
+    // Gestion de l'upload d'image
+    $image_name = '';
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+        $filename = $_FILES['image']['name'];
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        
+        if (in_array(strtolower($filetype), $allowed)) {
+            $image_name = uniqid() . '.' . $filetype;
+            move_uploaded_file($_FILES['image']['tmp_name'], '../assets/images/' . $image_name);
+        }
+    }
+    
+    $stmt = $bdd->prepare("INSERT INTO vehicules (nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$nom, $marque, $annee, $description, $image_name, $prix, $places]);
+    
+    header('Location: admin.php?page=vehicules');
+    exit;
+}
+
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-?>
-
-<?php
 function renderPage($page) {
     global $bdd;
     echo "<div class='admin-card'>";
@@ -18,11 +42,65 @@ function renderPage($page) {
             break;
 
         case 'vehicules':
-            echo "<h2>Gestionnaires véhicules</h2>";
+            ?>
+            <div class="header-with-button">
+                <h2>Gestionnaire vehicules</h2>
+                <button class="admin-btn" onclick="toggleForm()">+ Ajouter un vehicule</button>
+            </div>
 
-            $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
+            <!-- Formulaire d'ajout (masqué par défaut) -->
+            <div id="form-ajout-vehicule" class="form-container-admin" style="display: none;">
+                <h3>Ajouter un nouveau vehicule</h3>
+                <form method="POST" enctype="multipart/form-data" class="form-admin">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nom du vehicule *</label>
+                            <input type="text" name="nom_vehicule" required class="input-admin">
+                        </div>
+                        <div class="form-group">
+                            <label>Marque *</label>
+                            <input type="text" name="marque" required class="input-admin">
+                        </div>
+                    </div>
 
-            echo "<table border='1' class='admin-table'>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Annee *</label>
+                            <input type="number" name="annee_vehicule" min="1900" max="2025" required class="input-admin">
+                        </div>
+                        <div class="form-group">
+                            <label>Prix/jour (€) *</label>
+                            <input type="number" name="prix_jour" step="0.01" required class="input-admin">
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre de places *</label>
+                            <input type="number" name="nb_places" min="1" max="9" required class="input-admin">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" rows="3" class="input-admin"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image du vehicule</label>
+                        <input type="file" name="image" accept="image/*" class="input-file">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" name="ajouter_vehicule" class="admin-btn">Ajouter</button>
+                        <button type="button" class="admin-btn-secondary" onclick="toggleForm()">Annuler</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Table des véhicules -->
+            <div class="table-wrapper">
+                <?php
+                $vehicules = $bdd->query("SELECT id, nom_vehicule, marque, annee_vehicule, description, image, prix_jour, nb_places FROM vehicules")->fetchAll(PDO::FETCH_ASSOC);
+                ?>
+                <table class='admin-table'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -31,25 +109,40 @@ function renderPage($page) {
                             <th>Annee</th>
                             <th>Description</th>
                             <th>Image</th>
-                            <th>Prix_jour</th>
-                            <th>Nbr Places</th>
+                            <th>Prix/jour</th>
+                            <th>Places</th>
                         </tr>
                     </thead>
-                    <tbody>";
-            foreach ($vehicules as $v) {
-                echo "<tr>
-                        <td>{$v['id']}</td>
-                        <td>" . htmlspecialchars($v['nom_vehicule']) . "</td>
-                        <td>" . htmlspecialchars($v['marque']) . "</td>
-                        <td>{$v['annee_vehicule']}</td>
-                        <td>" . htmlspecialchars($v['description']) . "</td>
-                        <td><img src='../assets/images/" . htmlspecialchars($v['image']) . "' alt='Vehicle' style='max-width: 100px;'></td>
-                        <td>{$v['prix_jour']} €</td>
-                        <td>{$v['nb_places']}</td>
-                      </tr>";
-            }
+                    <tbody>
+                        <?php foreach ($vehicules as $v): ?>
+                        <tr>
+                            <td><?= $v['id'] ?></td>
+                            <td><?= htmlspecialchars($v['nom_vehicule']) ?></td>
+                            <td><?= htmlspecialchars($v['marque']) ?></td>
+                            <td><?= $v['annee_vehicule'] ?></td>
+                            <td><?= htmlspecialchars($v['description']) ?></td>
+                            <td>
+                                <?php if ($v['image']): ?>
+                                    <img src='../assets/images/<?= htmlspecialchars($v['image']) ?>' alt='Vehicle' style='max-width: 100px;'>
+                                <?php else: ?>
+                                    <span class="no-image">Aucune image</span>
+                                <?php endif; ?>
+                            </td>
+                            <td><?= $v['prix_jour'] ?> €</td>
+                            <td><?= $v['nb_places'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-            echo "</tbody></table>";
+            <script>
+            function toggleForm() {
+                const form = document.getElementById('form-ajout-vehicule');
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+            </script>
+            <?php
             break;
 
         case 'users':
@@ -57,7 +150,7 @@ function renderPage($page) {
 
             $users = $bdd->query("SELECT id, nom, email FROM utilisateurs")->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<table border='1' class='admin-table'>
+            echo "<table class='admin-table'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -81,7 +174,7 @@ function renderPage($page) {
             
             $reservation = $bdd->query("SELECT id, id_vehicule, id_utilisateur, date_debut, date_fin, message, total FROM reservation")->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<table border='1' class='admin-table'>
+            echo "<table class='admin-table'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -113,7 +206,7 @@ function renderPage($page) {
             
             $messages = $bdd->query("SELECT id, nom, email, message FROM contact")->fetchAll(PDO::FETCH_ASSOC);
 
-            echo "<table border='1' class='admin-table'>
+            echo "<table class='admin-table'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -142,7 +235,6 @@ function renderPage($page) {
     echo "</div>";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
